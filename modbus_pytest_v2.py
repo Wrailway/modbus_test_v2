@@ -467,2711 +467,2711 @@ class TestModbusProtocol:
             logger.error(f"恢复默认值发生了异常: {e}")
                 
             
-    # def test_read_battery_voltage(self):
-    #     self.print_test_info(status=self.TEST_START, info='read battery_voltage')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_BATTERY_VOLTAGE, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_BATTERY_VOLTAGE}>失败'
-    #         logger.info(f'读取寄存器<{ROH_BATTERY_VOLTAGE}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_BATTERY_VOLTAGE}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_BATTERY_VOLTAGE}>失败,发生异常')
+    def test_read_battery_voltage(self):
+        self.print_test_info(status=self.TEST_START, info='read battery_voltage')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_BATTERY_VOLTAGE, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_BATTERY_VOLTAGE}>失败'
+            logger.info(f'读取寄存器<{ROH_BATTERY_VOLTAGE}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_BATTERY_VOLTAGE}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_BATTERY_VOLTAGE}>失败,发生异常')
     
-    # def test_read_self_test_level(self):
-    #     self.print_test_info(status=self.TEST_START, info='read self test level')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_SELF_TEST_LEVEL, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_SELF_TEST_LEVEL}>失败'
-    #         logger.info(f'读取寄存器<{ROH_SELF_TEST_LEVEL}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_SELF_TEST_LEVEL}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_SELF_TEST_LEVEL}>失败,发生异常')
+    def test_read_self_test_level(self):
+        self.print_test_info(status=self.TEST_START, info='read self test level')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_SELF_TEST_LEVEL, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_SELF_TEST_LEVEL}>失败'
+            logger.info(f'读取寄存器<{ROH_SELF_TEST_LEVEL}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_SELF_TEST_LEVEL}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_SELF_TEST_LEVEL}>失败,发生异常')
     
-    # def test_write_self_test_level(self):
-    #     self.print_test_info(status=self.TEST_START, info='write self test level,The normal range is {0, 1, 2}, and the out-of-range values fall within {3, 65535}')
-    #     verify_sets = [
-    #         0,
-    #         1,
-    #         2,
-    #         3,
-    #         65535
-    #     ]
+    def test_write_self_test_level(self):
+        self.print_test_info(status=self.TEST_START, info='write self test level,The normal range is {0, 1, 2}, and the out-of-range values fall within {3, 65535}')
+        verify_sets = [
+            0,
+            1,
+            2,
+            3,
+            65535
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_SELF_TEST_LEVEL, data=value,node_id = NODE_ID)
-    #             data = value #将值转换成十进制
-    #             if index > 2:
-    #                 assert not response, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_SELF_TEST_LEVEL, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_SELF_TEST_LEVEL}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_SELF_TEST_LEVEL}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_SELF_TEST_LEVEL}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_SELF_TEST_LEVEL}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_SELF_TEST_LEVEL, data=value,node_id = NODE_ID)
+                data = value #将值转换成十进制
+                if index > 2:
+                    assert not response, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_SELF_TEST_LEVEL, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_SELF_TEST_LEVEL}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_SELF_TEST_LEVEL}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_SELF_TEST_LEVEL}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_SELF_TEST_LEVEL}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_SELF_TEST_LEVEL, data=SELF_TEST_LEVEL)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_SELF_TEST_LEVEL, data=SELF_TEST_LEVEL)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_beep_switch(self):
-    #     self.print_test_info(status=self.TEST_START, info='read beep switch')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_BEEP_SWITCH, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_BEEP_SWITCH}>失败'
-    #         logger.info(f'读取寄存器<{ROH_BEEP_SWITCH}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_BEEP_SWITCH}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_BEEP_SWITCH}>失败,发生异常')
+    def test_read_beep_switch(self):
+        self.print_test_info(status=self.TEST_START, info='read beep switch')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_BEEP_SWITCH, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_BEEP_SWITCH}>失败'
+            logger.info(f'读取寄存器<{ROH_BEEP_SWITCH}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_BEEP_SWITCH}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_BEEP_SWITCH}>失败,发生异常')
                 
-    # def test_write_beep_switch(self):
-    #     self.print_test_info(status=self.TEST_START, info='write beep switch,The normal range is 0 or not 0')
-    #     verify_sets = [
-    #         0,
-    #         1,
-    #         255
-    #     ]
+    def test_write_beep_switch(self):
+        self.print_test_info(status=self.TEST_START, info='write beep switch,The normal range is 0 or not 0')
+        verify_sets = [
+            0,
+            1,
+            255
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_BEEP_SWITCH, data=value)
-    #             data = value
-    #             if index > 0:
-    #                 expected_data = 1
-    #             else :
-    #                 expected_data = 0
-    #             read_response = read_registers(bus=self.bus, start_address=ROH_BEEP_SWITCH, register_count=1)
-    #             assert read_response.registers[0] == expected_data, f"从寄存器{ROH_BEEP_SWITCH}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #             logger.info(f"从寄存器{ROH_BEEP_SWITCH}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_BEEP_SWITCH}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_BEEP_SWITCH}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_BEEP_SWITCH, data=value)
+                data = value
+                if index > 0:
+                    expected_data = 1
+                else :
+                    expected_data = 0
+                read_response = read_registers(bus=self.bus, start_address=ROH_BEEP_SWITCH, register_count=1)
+                assert read_response.registers[0] == expected_data, f"从寄存器{ROH_BEEP_SWITCH}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                logger.info(f"从寄存器{ROH_BEEP_SWITCH}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_BEEP_SWITCH}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_BEEP_SWITCH}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_BEEP_SWITCH, data=BEEP_SWITCH)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_BEEP_SWITCH, data=BEEP_SWITCH)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
         
         
-    # def test_write_beep_period(self):
-    #     self.print_test_info(status=self.TEST_START, info='write beep period,The normal range is [1,65535], and the out-of-range values fall within [0]')
-    #     verify_sets = [
-    #         0,
-    #         1,
-    #         32767,
-    #         65535
-    #     ]
+    def test_write_beep_period(self):
+        self.print_test_info(status=self.TEST_START, info='write beep period,The normal range is [1,65535], and the out-of-range values fall within [0]')
+        verify_sets = [
+            0,
+            1,
+            32767,
+            65535
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_BEEP_PERIOD, data=value)
-    #             data = value
-    #             if index ==0:
-    #                 assert not response, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 # read_response = read_registers(bus=self.bus, start_address=ROH_BEEP_PERIOD, register_count=1)
-    #                 assert response, f"写寄存器{ROH_BEEP_PERIOD}失败，写入值为{data}"
-    #                 logger.info(f"写寄存器{ROH_BEEP_PERIOD}成功,写入值为{data}\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_BEEP_PERIOD}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_BEEP_PERIOD}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_BEEP_PERIOD, data=value)
+                data = value
+                if index ==0:
+                    assert not response, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    # read_response = read_registers(bus=self.bus, start_address=ROH_BEEP_PERIOD, register_count=1)
+                    assert response, f"写寄存器{ROH_BEEP_PERIOD}失败，写入值为{data}"
+                    logger.info(f"写寄存器{ROH_BEEP_PERIOD}成功,写入值为{data}\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_BEEP_PERIOD}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_BEEP_PERIOD}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_BEEP_PERIOD, data=BEEP_PERIOD)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_BEEP_PERIOD, data=BEEP_PERIOD)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_P0(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger P0')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_P0, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_P0}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_P0}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_P0}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_P0}>失败,发生异常')
+    def test_read_finger_P0(self):
+        self.print_test_info(status=self.TEST_START,info='read finger P0')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_P0, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_P0}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_P0}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_P0}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_P0}>失败,发生异常')
   
-    # def test_write_finger_P0(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger P0,The normal range is [100,50000], and the out-of-range values fall within {0,1,99,50001,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         1,# 1
-    #         99,# 99
-    #         100,# 100
-    #         25000,# 25000
-    #         50000,# 50000 
-    #         50001,# 50001 
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_P0(self):
+        self.print_test_info(status=self.TEST_START, info='write finger P0,The normal range is [100,50000], and the out-of-range values fall within {0,1,99,50001,65535}')
+        verify_sets = [
+            0,# 0
+            1,# 1
+            99,# 99
+            100,# 100
+            25000,# 25000
+            50000,# 50000 
+            50001,# 50001 
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_P0, data=value)
-    #             data = value
-    #             if index <= 2 or index >= 6 : # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P0, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P0, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_P0}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_P0}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_P0}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_P0}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_P0, data=value)
+                data = value
+                if index <= 2 or index >= 6 : # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P0, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P0, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_P0}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_P0}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_P0}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_P0}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_P0, data=FINGER_P0)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_P0, data=FINGER_P0)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_P1(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger P1')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_P1, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_P1}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_P1}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_P1}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_P1}>失败,发生异常')
+    def test_read_finger_P1(self):
+        self.print_test_info(status=self.TEST_START,info='read finger P1')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_P1, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_P1}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_P1}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_P1}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_P1}>失败,发生异常')
   
-    # def test_write_finger_P1(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger P1,The normal range is [100,50000], and the out-of-range values fall within {0,1,99,50001,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         1,# 1
-    #         99,# 99
-    #         100,# 100
-    #         25000,# 25000
-    #         50000,# 50000 
-    #         50001,# 50001 
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_P1(self):
+        self.print_test_info(status=self.TEST_START, info='write finger P1,The normal range is [100,50000], and the out-of-range values fall within {0,1,99,50001,65535}')
+        verify_sets = [
+            0,# 0
+            1,# 1
+            99,# 99
+            100,# 100
+            25000,# 25000
+            50000,# 50000 
+            50001,# 50001 
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_P1, data=value)
-    #             data = value
-    #             if index <= 2 or index >= 6 : # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P1, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P1, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_P1}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_P1}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_P1}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_P1}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_P1, data=value)
+                data = value
+                if index <= 2 or index >= 6 : # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P1, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P1, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_P1}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_P1}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_P1}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_P1}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_P1, data=FINGER_P1)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_P1, data=FINGER_P1)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
             
-    # def test_read_finger_P2(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger P2')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_P2, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_P2}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_P2}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_P2}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_P2}>失败,发生异常')
+    def test_read_finger_P2(self):
+        self.print_test_info(status=self.TEST_START,info='read finger P2')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_P2, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_P2}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_P2}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_P2}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_P2}>失败,发生异常')
   
-    # def test_write_finger_P2(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger P2,The normal range is [100,50000], and the out-of-range values fall within {0,1,99,50001,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         1,# 1
-    #         99,# 99
-    #         100,# 100
-    #         25000,# 25000
-    #         50000,# 50000 
-    #         50001,# 50001 
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_P2(self):
+        self.print_test_info(status=self.TEST_START, info='write finger P2,The normal range is [100,50000], and the out-of-range values fall within {0,1,99,50001,65535}')
+        verify_sets = [
+            0,# 0
+            1,# 1
+            99,# 99
+            100,# 100
+            25000,# 25000
+            50000,# 50000 
+            50001,# 50001 
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_P2, data=value)
-    #             data = value
-    #             if index <= 2 or index >= 6 : # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P2, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P2, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_P2}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_P2}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_P2}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_P2}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_P2, data=value)
+                data = value
+                if index <= 2 or index >= 6 : # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P2, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P2, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_P2}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_P2}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_P2}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_P2}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_P2, data=FINGER_P2)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_P2, data=FINGER_P2)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_P3(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger P3')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_P3, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_P3}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_P3}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_P3}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_P3}>失败,发生异常')
+    def test_read_finger_P3(self):
+        self.print_test_info(status=self.TEST_START,info='read finger P3')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_P3, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_P3}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_P3}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_P3}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_P3}>失败,发生异常')
   
-    # def test_write_finger_P3(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger P3,The normal range is [100,50000], and the out-of-range values fall within {0,1,99,50001,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         1,# 1
-    #         99,# 99
-    #         100,# 100
-    #         25000,# 25000
-    #         50000,# 50000 
-    #         50001,# 50001 
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_P3(self):
+        self.print_test_info(status=self.TEST_START, info='write finger P3,The normal range is [100,50000], and the out-of-range values fall within {0,1,99,50001,65535}')
+        verify_sets = [
+            0,# 0
+            1,# 1
+            99,# 99
+            100,# 100
+            25000,# 25000
+            50000,# 50000 
+            50001,# 50001 
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_P3, data=value)
-    #             data = value
-    #             if index <= 2 or index >= 6 : # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P3, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P3, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_P3}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_P3}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_P3}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_P3}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_P3, data=value)
+                data = value
+                if index <= 2 or index >= 6 : # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P3, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P3, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_P3}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_P3}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_P3}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_P3}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_P3, data=FINGER_P3)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_P3, data=FINGER_P3)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_P4(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger P4')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_P4, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_P4}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_P4}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_P4}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_P4}>失败,发生异常')
+    def test_read_finger_P4(self):
+        self.print_test_info(status=self.TEST_START,info='read finger P4')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_P4, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_P4}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_P4}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_P4}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_P4}>失败,发生异常')
   
-    # def test_write_finger_P4(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger P4,The normal range is [100,50000], and the out-of-range values fall within {0,1,99,50001,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         1,# 1
-    #         99,# 99
-    #         100,# 100
-    #         25000,# 25000
-    #         50000,# 50000 
-    #         50001,# 50001 
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_P4(self):
+        self.print_test_info(status=self.TEST_START, info='write finger P4,The normal range is [100,50000], and the out-of-range values fall within {0,1,99,50001,65535}')
+        verify_sets = [
+            0,# 0
+            1,# 1
+            99,# 99
+            100,# 100
+            25000,# 25000
+            50000,# 50000 
+            50001,# 50001 
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_P4, data=value)
-    #             data = value
-    #             if index <= 2 or index >= 6 : # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P4, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P4, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_P4}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_P4}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_P4}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_P4}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_P4, data=value)
+                data = value
+                if index <= 2 or index >= 6 : # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P4, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P4, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_P4}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_P4}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_P4}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_P4}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_P4, data=FINGER_P4)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_P4, data=FINGER_P4)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
     
-    # def test_read_finger_P5(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger P5')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_P5, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_P5}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_P5}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_P5}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_P5}>失败,发生异常')
+    def test_read_finger_P5(self):
+        self.print_test_info(status=self.TEST_START,info='read finger P5')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_P5, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_P5}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_P5}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_P5}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_P5}>失败,发生异常')
   
-    # def test_write_finger_P5(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger P5,The normal range is [100,50000], and the out-of-range values fall within {0,1,99,50001,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         1,# 1
-    #         99,# 99
-    #         100,# 100
-    #         25000,# 25000
-    #         50000,# 50000 
-    #         50001,# 50001 
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_P5(self):
+        self.print_test_info(status=self.TEST_START, info='write finger P5,The normal range is [100,50000], and the out-of-range values fall within {0,1,99,50001,65535}')
+        verify_sets = [
+            0,# 0
+            1,# 1
+            99,# 99
+            100,# 100
+            25000,# 25000
+            50000,# 50000 
+            50001,# 50001 
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_P5, data=value)
-    #             data = value
-    #             if index <= 2 or index >= 6 : # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P5, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P5, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_P5}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_P5}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_P5}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_P5}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_P5, data=value)
+                data = value
+                if index <= 2 or index >= 6 : # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P5, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_P5, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_P5}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_P5}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_P5}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_P5}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_P5, data=FINGER_P5)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_P5, data=FINGER_P5)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
             
-    # def test_read_finger_I0(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger I0')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_I0, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_I0}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_I0}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_I0}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_I0}>失败,发生异常')
+    def test_read_finger_I0(self):
+        self.print_test_info(status=self.TEST_START,info='read finger I0')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_I0, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_I0}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_I0}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_I0}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_I0}>失败,发生异常')
   
-    # def test_write_finger_I0(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger I0,The normal range is [0,10000], and the out-of-range values fall within {10001,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         5000,# 5000
-    #         10000,# 10000
-    #         10001,# 10001
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_I0(self):
+        self.print_test_info(status=self.TEST_START, info='write finger I0,The normal range is [0,10000], and the out-of-range values fall within {10001,65535}')
+        verify_sets = [
+            0,# 0
+            5000,# 5000
+            10000,# 10000
+            10001,# 10001
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_I0, data=value)
-    #             data = value
-    #             if index > 2: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I0, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I0, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_I0}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_I0}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_I0}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_I0}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_I0, data=value)
+                data = value
+                if index > 2: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I0, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I0, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_I0}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_I0}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_I0}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_I0}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_I0, data=FINGER_I0)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_I0, data=FINGER_I0)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_I1(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger I1')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_I1, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_I1}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_I1}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_I1}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_I1}>失败,发生异常')
+    def test_read_finger_I1(self):
+        self.print_test_info(status=self.TEST_START,info='read finger I1')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_I1, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_I1}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_I1}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_I1}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_I1}>失败,发生异常')
   
-    # def test_write_finger_I1(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger I1,The normal range is [0,10000], and the out-of-range values fall within {10001,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         5000,# 5000
-    #         10000,# 10000
-    #         10001,# 10001
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_I1(self):
+        self.print_test_info(status=self.TEST_START, info='write finger I1,The normal range is [0,10000], and the out-of-range values fall within {10001,65535}')
+        verify_sets = [
+            0,# 0
+            5000,# 5000
+            10000,# 10000
+            10001,# 10001
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_I1, data=value)
-    #             data = value
-    #             if index > 2: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I1, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I1, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_I1}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_I1}读出的值{read_response.registers[0]           }与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_I1}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_I1}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_I1, data=value)
+                data = value
+                if index > 2: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I1, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I1, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_I1}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_I1}读出的值{read_response.registers[0]           }与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_I1}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_I1}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_I1, data=FINGER_I1)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_I1, data=FINGER_I1)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_I2(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger I2')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_I2, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_I2}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_I2}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_I2}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_I2}>失败,发生异常')
+    def test_read_finger_I2(self):
+        self.print_test_info(status=self.TEST_START,info='read finger I2')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_I2, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_I2}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_I2}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_I2}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_I2}>失败,发生异常')
   
-    # def test_write_finger_I2(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger I2,The normal range is [0,10000], and the out-of-range values fall within {10001,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         5000,# 5000
-    #         10000,# 10000
-    #         10001,# 10001
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_I2(self):
+        self.print_test_info(status=self.TEST_START, info='write finger I2,The normal range is [0,10000], and the out-of-range values fall within {10001,65535}')
+        verify_sets = [
+            0,# 0
+            5000,# 5000
+            10000,# 10000
+            10001,# 10001
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_I2, data=value)
-    #             data = value
-    #             if index > 2: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I2, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I2, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_I2}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_I2}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_I2}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_I2}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_I2, data=value)
+                data = value
+                if index > 2: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I2, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I2, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_I2}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_I2}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_I2}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_I2}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_I2, data=FINGER_I2)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_I2, data=FINGER_I2)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
     
-    # def test_read_finger_I3(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger I3')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_I3, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_I3}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_I3}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_I3}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_I3}>失败,发生异常')
+    def test_read_finger_I3(self):
+        self.print_test_info(status=self.TEST_START,info='read finger I3')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_I3, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_I3}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_I3}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_I3}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_I3}>失败,发生异常')
   
-    # def test_write_finger_I3(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger I3,The normal range is [0,10000], and the out-of-range values fall within {10001,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         5000,# 5000
-    #         10000,# 10000
-    #         10001,# 10001
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_I3(self):
+        self.print_test_info(status=self.TEST_START, info='write finger I3,The normal range is [0,10000], and the out-of-range values fall within {10001,65535}')
+        verify_sets = [
+            0,# 0
+            5000,# 5000
+            10000,# 10000
+            10001,# 10001
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_I3, data=value)
-    #             data = value
-    #             if index > 2: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I3, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I3, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_I3}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_I3}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_I3}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_I3}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_I3, data=value)
+                data = value
+                if index > 2: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I3, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I3, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_I3}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_I3}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_I3}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_I3}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_I3, data=FINGER_I3)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_I3, data=FINGER_I3)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_I4(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger I4')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_I4, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_I4}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_I4}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_I4}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_I4}>失败,发生异常')
+    def test_read_finger_I4(self):
+        self.print_test_info(status=self.TEST_START,info='read finger I4')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_I4, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_I4}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_I4}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_I4}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_I4}>失败,发生异常')
   
-    # def test_write_finger_I4(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger I4,The normal range is [0,10000], and the out-of-range values fall within {10001,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         5000,# 5000
-    #         10000,# 10000
-    #         10001,# 10001
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_I4(self):
+        self.print_test_info(status=self.TEST_START, info='write finger I4,The normal range is [0,10000], and the out-of-range values fall within {10001,65535}')
+        verify_sets = [
+            0,# 0
+            5000,# 5000
+            10000,# 10000
+            10001,# 10001
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_I4, data=value)
-    #             data = value
-    #             if index > 2: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I4, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I4, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_I4}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_I4}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_I4}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_I4}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_I4, data=value)
+                data = value
+                if index > 2: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I4, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I4, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_I4}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_I4}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_I4}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_I4}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_I4, data=FINGER_I4)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_I4, data=FINGER_I4)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_I5(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger I5')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_I5, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_I5}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_I5}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_I5}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_I5}>失败,发生异常')
+    def test_read_finger_I5(self):
+        self.print_test_info(status=self.TEST_START,info='read finger I5')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_I5, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_I5}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_I5}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_I5}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_I5}>失败,发生异常')
   
-    # def test_write_finger_I5(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger I5,The normal range is [0,10000], and the out-of-range values fall within {10001,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         5000,# 5000
-    #         10000,# 10000
-    #         10001,# 10001
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_I5(self):
+        self.print_test_info(status=self.TEST_START, info='write finger I5,The normal range is [0,10000], and the out-of-range values fall within {10001,65535}')
+        verify_sets = [
+            0,# 0
+            5000,# 5000
+            10000,# 10000
+            10001,# 10001
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_I5, data=value)
-    #             data = value
-    #             if index > 2: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I5, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I5, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_I5}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_I5}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_I5}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_I5}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_I5, data=value)
+                data = value
+                if index > 2: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I5, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_I5, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_I5}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_I5}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_I5}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_I5}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_I5, data=FINGER_I5)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_I5, data=FINGER_I5)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
     
     
-    # def test_read_finger_D0(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger D0')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_D0, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_D0}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_D0}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_D0}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_D0}>失败,发生异常')
+    def test_read_finger_D0(self):
+        self.print_test_info(status=self.TEST_START,info='read finger D0')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_D0, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_D0}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_D0}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_D0}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_D0}>失败,发生异常')
   
-    # def test_write_finger_D0(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger D0,The normal range is [0,50000], and the out-of-range values fall within {50001,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         25000,# 25000
-    #         50000,# 50000 
-    #         50001,# 50001 
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_D0(self):
+        self.print_test_info(status=self.TEST_START, info='write finger D0,The normal range is [0,50000], and the out-of-range values fall within {50001,65535}')
+        verify_sets = [
+            0,# 0
+            25000,# 25000
+            50000,# 50000 
+            50001,# 50001 
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_D0, data=value)
-    #             data = value
-    #             if index > 2: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D0, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D0, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_D0}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_D0}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_D0}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_D0}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_D0, data=value)
+                data = value
+                if index > 2: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D0, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D0, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_D0}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_D0}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_D0}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_D0}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_D0, data=FINGER_D0)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_D0, data=FINGER_D0)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_D1(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger D1')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_D1, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_D1}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_D1}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_D1}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_D1}>失败,发生异常')
+    def test_read_finger_D1(self):
+        self.print_test_info(status=self.TEST_START,info='read finger D1')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_D1, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_D1}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_D1}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_D1}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_D1}>失败,发生异常')
   
-    # def test_write_finger_D1(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger D1,The normal range is [0,50000], and the out-of-range values fall within {50001,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         25000,# 25000
-    #         50000,# 50000 
-    #         50001,# 50001 
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_D1(self):
+        self.print_test_info(status=self.TEST_START, info='write finger D1,The normal range is [0,50000], and the out-of-range values fall within {50001,65535}')
+        verify_sets = [
+            0,# 0
+            25000,# 25000
+            50000,# 50000 
+            50001,# 50001 
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_D1, data=value)
-    #             data = value
-    #             if index > 2: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D1, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D1, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_D1}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_D1}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_D1}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_D1}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_D1, data=value)
+                data = value
+                if index > 2: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D1, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D1, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_D1}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_D1}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_D1}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_D1}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_D1, data=FINGER_D1)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_D1, data=FINGER_D1)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_D2(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger D2')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_D2, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_D2}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_D2}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_D2}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_D2}>失败,发生异常')
+    def test_read_finger_D2(self):
+        self.print_test_info(status=self.TEST_START,info='read finger D2')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_D2, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_D2}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_D2}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_D2}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_D2}>失败,发生异常')
   
-    # def test_write_finger_D2(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger D2,The normal range is [0,50000], and the out-of-range values fall within {50001,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         25000,# 25000
-    #         50000,# 50000 
-    #         50001,# 50001 
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_D2(self):
+        self.print_test_info(status=self.TEST_START, info='write finger D2,The normal range is [0,50000], and the out-of-range values fall within {50001,65535}')
+        verify_sets = [
+            0,# 0
+            25000,# 25000
+            50000,# 50000 
+            50001,# 50001 
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_D2, data=value)
-    #             data = value
-    #             if index > 2: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D2, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D2, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_D2}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_D2}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_D2}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_D2}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_D2, data=value)
+                data = value
+                if index > 2: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D2, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D2, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_D2}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_D2}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_D2}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_D2}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_D2, data=FINGER_D2)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_D2, data=FINGER_D2)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_D3(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger D3')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_D3, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_D3}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_D3}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_D3}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_D3}>失败,发生异常')
+    def test_read_finger_D3(self):
+        self.print_test_info(status=self.TEST_START,info='read finger D3')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_D3, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_D3}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_D3}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_D3}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_D3}>失败,发生异常')
   
-    # def test_write_finger_D3(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger D3,The normal range is [0,50000], and the out-of-range values fall within {50001,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         25000,# 25000
-    #         50000,# 50000 
-    #         50001,# 50001 
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_D3(self):
+        self.print_test_info(status=self.TEST_START, info='write finger D3,The normal range is [0,50000], and the out-of-range values fall within {50001,65535}')
+        verify_sets = [
+            0,# 0
+            25000,# 25000
+            50000,# 50000 
+            50001,# 50001 
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_D3, data=value)
-    #             data = value
-    #             if index > 2: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D3, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D3, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_D3}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_D3}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_D3}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_D3}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_D3, data=value)
+                data = value
+                if index > 2: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D3, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D3, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_D3}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_D3}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_D3}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_D3}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_D3, data=FINGER_D3)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_D3, data=FINGER_D3)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_D4(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger D4')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_D4, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_D4}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_D4}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_D4}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_D4}>失败,发生异常')
+    def test_read_finger_D4(self):
+        self.print_test_info(status=self.TEST_START,info='read finger D4')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_D4, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_D4}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_D4}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_D4}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_D4}>失败,发生异常')
   
-    # def test_write_finger_D4(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger D4,The normal range is [0,50000], and the out-of-range values fall within {50001,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         25000,# 25000
-    #         50000,# 50000 
-    #         50001,# 50001 
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_D4(self):
+        self.print_test_info(status=self.TEST_START, info='write finger D4,The normal range is [0,50000], and the out-of-range values fall within {50001,65535}')
+        verify_sets = [
+            0,# 0
+            25000,# 25000
+            50000,# 50000 
+            50001,# 50001 
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_D4, data=value)
-    #             data = value
-    #             if index > 2: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D4, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D4, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_D4}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_D4}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_D4}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_D4}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_D4, data=value)
+                data = value
+                if index > 2: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D4, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D4, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_D4}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_D4}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_D4}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_D4}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_D4, data=FINGER_D4)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_D4, data=FINGER_D4)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_D5(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger D5')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_D5, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_D5}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_D5}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_D5}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_D5}>失败,发生异常')
+    def test_read_finger_D5(self):
+        self.print_test_info(status=self.TEST_START,info='read finger D5')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_D5, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_D5}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_D5}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_D5}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_D5}>失败,发生异常')
   
-    # def test_write_finger_D5(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger D5,The normal range is [0,50000], and the out-of-range values fall within {50001,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         25000,# 25000
-    #         50000,# 50000 
-    #         50001,# 50001 
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_D5(self):
+        self.print_test_info(status=self.TEST_START, info='write finger D5,The normal range is [0,50000], and the out-of-range values fall within {50001,65535}')
+        verify_sets = [
+            0,# 0
+            25000,# 25000
+            50000,# 50000 
+            50001,# 50001 
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_D5, data=value)
-    #             data = value
-    #             if index > 2: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D5, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D5, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_D5}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_D5}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_D5}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_D5}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_D5, data=value)
+                data = value
+                if index > 2: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D5, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_D5, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_D5}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_D5}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_D5}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_D5}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_D5, data=FINGER_D5)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_D5, data=FINGER_D5)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_G0(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger G0')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_G0, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_G0}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_G0}>成功,读取的值为:{response}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_G0}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_G0}>失败,发生异常')
+    def test_read_finger_G0(self):
+        self.print_test_info(status=self.TEST_START,info='read finger G0')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_G0, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_G0}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_G0}>成功,读取的值为:{response}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_G0}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_G0}>失败,发生异常')
   
-    # def test_write_finger_G0(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger G0,The normal range is [1,100], and the out-of-range values fall within {0,101,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         1,# 1
-    #         50,# 50
-    #         100,# 100
-    #         101,# 101
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_G0(self):
+        self.print_test_info(status=self.TEST_START, info='write finger G0,The normal range is [1,100], and the out-of-range values fall within {0,101,65535}')
+        verify_sets = [
+            0,# 0
+            1,# 1
+            50,# 50
+            100,# 100
+            101,# 101
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_G0, data=value)
-    #             data = value
-    #             if index ==0 or index > 3: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G0, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G0, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_G0}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_G0}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_G0}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_G0}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_G0, data=value)
+                data = value
+                if index ==0 or index > 3: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G0, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G0, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_G0}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_G0}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_G0}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_G0}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_G0, data=FINGER_G0)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_G0, data=FINGER_G0)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
             
-    # def test_read_finger_G1(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger G1')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_G1, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_G1}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_G1}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_G1}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_G1}>失败,发生异常')
+    def test_read_finger_G1(self):
+        self.print_test_info(status=self.TEST_START,info='read finger G1')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_G1, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_G1}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_G1}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_G1}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_G1}>失败,发生异常')
   
-    # def test_write_finger_G1(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger G1,The normal range is [1,100], and the out-of-range values fall within {0,101,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         1,# 1
-    #         50,# 50
-    #         100,# 100
-    #         101,# 101
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_G1(self):
+        self.print_test_info(status=self.TEST_START, info='write finger G1,The normal range is [1,100], and the out-of-range values fall within {0,101,65535}')
+        verify_sets = [
+            0,# 0
+            1,# 1
+            50,# 50
+            100,# 100
+            101,# 101
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_G1, data=value)
-    #             data = value
-    #             if index ==0 or index > 3: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G1, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G1, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_G1}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_G1}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_G1}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_G1}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_G1, data=value)
+                data = value
+                if index ==0 or index > 3: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G1, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G1, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_G1}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_G1}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_G1}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_G1}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_G1, data=FINGER_G1)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_G1, data=FINGER_G1)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_G2(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger G2')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_G2, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_G2}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_G2}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_G2}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_G2}>失败,发生异常')
+    def test_read_finger_G2(self):
+        self.print_test_info(status=self.TEST_START,info='read finger G2')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_G2, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_G2}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_G2}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_G2}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_G2}>失败,发生异常')
   
-    # def test_write_finger_G2(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger G2,The normal range is [1,100], and the out-of-range values fall within {0,101,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         1,# 1
-    #         50,# 50
-    #         100,# 100
-    #         101,# 101
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_G2(self):
+        self.print_test_info(status=self.TEST_START, info='write finger G2,The normal range is [1,100], and the out-of-range values fall within {0,101,65535}')
+        verify_sets = [
+            0,# 0
+            1,# 1
+            50,# 50
+            100,# 100
+            101,# 101
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_G2, data=value)
-    #             data = value
-    #             if index ==0 or index > 3: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G2, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G2, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_G2}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_G2}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_G2}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_G2}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_G2, data=value)
+                data = value
+                if index ==0 or index > 3: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G2, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G2, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_G2}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_G2}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_G2}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_G2}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_G2, data=FINGER_G2)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_G2, data=FINGER_G2)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_G3(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger G3')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_G3, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_G3}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_G3}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_G3}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_G3}>失败,发生异常')
+    def test_read_finger_G3(self):
+        self.print_test_info(status=self.TEST_START,info='read finger G3')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_G3, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_G3}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_G3}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_G3}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_G3}>失败,发生异常')
   
-    # def test_write_finger_G3(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger G3,The normal range is [1,100], and the out-of-range values fall within {0,101,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         1,# 1
-    #         50,# 50
-    #         100,# 100
-    #         101,# 101
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_G3(self):
+        self.print_test_info(status=self.TEST_START, info='write finger G3,The normal range is [1,100], and the out-of-range values fall within {0,101,65535}')
+        verify_sets = [
+            0,# 0
+            1,# 1
+            50,# 50
+            100,# 100
+            101,# 101
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_G3, data=value)
-    #             data = value
-    #             if index ==0 or index > 3: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G3, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G3, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_G3}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_G3}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_G3}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_G3}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_G3, data=value)
+                data = value
+                if index ==0 or index > 3: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G3, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G3, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_G3}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_G3}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_G3}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_G3}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_G3, data=FINGER_G3)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_G3, data=FINGER_G3)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_G4(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger G4')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_G4, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_G4}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_G4}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_G4}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_G4}>失败,发生异常')
+    def test_read_finger_G4(self):
+        self.print_test_info(status=self.TEST_START,info='read finger G4')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_G4, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_G4}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_G4}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_G4}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_G4}>失败,发生异常')
   
-    # def test_write_finger_G4(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger G4,The normal range is [1,100], and the out-of-range values fall within {0,101,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         1,# 1
-    #         50,# 50
-    #         100,# 100
-    #         101,# 101
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_G4(self):
+        self.print_test_info(status=self.TEST_START, info='write finger G4,The normal range is [1,100], and the out-of-range values fall within {0,101,65535}')
+        verify_sets = [
+            0,# 0
+            1,# 1
+            50,# 50
+            100,# 100
+            101,# 101
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_G4, data=value)
-    #             data = value
-    #             if index ==0 or index > 3: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G4, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G4, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_G4}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_G4}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_G4}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_G4}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_G4, data=value)
+                data = value
+                if index ==0 or index > 3: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G4, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G4, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_G4}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_G4}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_G4}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_G4}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_G4, data=FINGER_G4)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_G4, data=FINGER_G4)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_G5(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger G5')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_G5, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_G5}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_G5}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_G5}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_G5}>失败,发生异常')
+    def test_read_finger_G5(self):
+        self.print_test_info(status=self.TEST_START,info='read finger G5')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_G5, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_G5}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_G5}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_G5}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_G5}>失败,发生异常')
   
-    # def test_write_finger_G5(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger G5,The normal range is [1,100], and the out-of-range values fall within {0,101,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         1,# 1
-    #         50,# 50
-    #         100,# 100
-    #         101,# 101
-    #         65535# 65535 
-    #     ]
+    def test_write_finger_G5(self):
+        self.print_test_info(status=self.TEST_START, info='write finger G5,The normal range is [1,100], and the out-of-range values fall within {0,101,65535}')
+        verify_sets = [
+            0,# 0
+            1,# 1
+            50,# 50
+            100,# 100
+            101,# 101
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_G5, data=value)
-    #             data = value
-    #             if index ==0 or index > 3: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G5, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G5, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_G5}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_G5}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_G5}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_G5}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_G5, data=value)
+                data = value
+                if index ==0 or index > 3: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G5, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_G5, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_G5}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_G5}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_G5}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_G5}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_G5, data=FINGER_G5)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_G5, data=FINGER_G5)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_status0(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger status0')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_STATUS0, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_STATUS0}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_STATUS0}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_STATUS0}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_STATUS0}>失败,发生异常')
+    def test_read_finger_status0(self):
+        self.print_test_info(status=self.TEST_START,info='read finger status0')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_STATUS0, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_STATUS0}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_STATUS0}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_STATUS0}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_STATUS0}>失败,发生异常')
             
-    # def test_read_finger_status1(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger status1')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_STATUS1, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_STATUS1}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_STATUS1}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_STATUS1}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_STATUS1}>失败,发生异常')
+    def test_read_finger_status1(self):
+        self.print_test_info(status=self.TEST_START,info='read finger status1')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_STATUS1, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_STATUS1}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_STATUS1}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_STATUS1}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_STATUS1}>失败,发生异常')
             
-    # def test_read_finger_status2(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger status2')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_STATUS2, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_STATUS2}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_STATUS2}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_STATUS2}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_STATUS2}>失败,发生异常')
+    def test_read_finger_status2(self):
+        self.print_test_info(status=self.TEST_START,info='read finger status2')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_STATUS2, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_STATUS2}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_STATUS2}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_STATUS2}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_STATUS2}>失败,发生异常')
             
-    # def test_read_finger_status3(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger status3')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_STATUS3, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_STATUS3}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_STATUS3}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_STATUS3}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_STATUS3}>失败,发生异常')
+    def test_read_finger_status3(self):
+        self.print_test_info(status=self.TEST_START,info='read finger status3')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_STATUS3, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_STATUS3}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_STATUS3}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_STATUS3}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_STATUS3}>失败,发生异常')
             
-    # def test_read_finger_status4(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger status4')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_STATUS4, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_STATUS4}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_STATUS4}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_STATUS4}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_STATUS4}>失败,发生异常')
+    def test_read_finger_status4(self):
+        self.print_test_info(status=self.TEST_START,info='read finger status4')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_STATUS4, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_STATUS4}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_STATUS4}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_STATUS4}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_STATUS4}>失败,发生异常')
             
-    # def test_read_finger_status5(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger status5')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_STATUS5, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_STATUS5}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_STATUS5}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_STATUS5}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_STATUS5}>失败,发生异常')
+    def test_read_finger_status5(self):
+        self.print_test_info(status=self.TEST_START,info='read finger status5')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_STATUS5, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_STATUS5}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_STATUS5}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_STATUS5}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_STATUS5}>失败,发生异常')
             
-    # def test_read_finger_current_limit0(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger current limit0')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT0, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT0}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT0}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_CURRENT_LIMIT0}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT0}>失败,发生异常')
+    def test_read_finger_current_limit0(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger current limit0')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT0, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT0}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT0}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_CURRENT_LIMIT0}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT0}>失败,发生异常')
     
-    # # @pytest.mark.skip('1200边界值写入后,读出来是1178,需要研发修改')        
-    # def test_write_current_limit0(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger current limit0,The normal range is [0,1200], and the out-of-range values fall within {1201,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         600,# 600
-    #         1200,# 1200
-    #         1201,# 1201
-    #         65535# 65535 
-    #     ]
+    # @pytest.mark.skip('1200边界值写入后,读出来是1178,需要研发修改')        
+    def test_write_current_limit0(self):
+        self.print_test_info(status=self.TEST_START, info='write finger current limit0,The normal range is [0,1200], and the out-of-range values fall within {1201,65535}')
+        verify_sets = [
+            0,# 0
+            600,# 600
+            1200,# 1200
+            1201,# 1201
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT0, data=value)
-    #             data = value
-    #             if index > 2: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT0, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT0, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_CURRENT_LIMIT0}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_CURRENT_LIMIT0}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_CURRENT_LIMIT0}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_CURRENT_LIMIT0}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT0, data=value)
+                data = value
+                if index > 2: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT0, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT0, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_CURRENT_LIMIT0}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_CURRENT_LIMIT0}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_CURRENT_LIMIT0}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_CURRENT_LIMIT0}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT0, data=FINGER_CURRENT_LIMIT0)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT0, data=FINGER_CURRENT_LIMIT0)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_current_limit1(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger current limit1')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT1, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT1}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT1}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_CURRENT_LIMIT1}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT1}>失败,发生异常')
+    def test_read_finger_current_limit1(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger current limit1')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT1, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT1}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT1}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_CURRENT_LIMIT1}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT1}>失败,发生异常')
     
-    # # @pytest.mark.skip('1200边界值写入后,读出来是1178,需要研发修改')        
-    # def test_write_current_limit1(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger current limit1,The normal range is [0,1200], and the out-of-range values fall within {1201,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         600,# 600
-    #         1200,# 1200
-    #         1201,# 1201
-    #         65535# 65535 
-    #     ]
+    # @pytest.mark.skip('1200边界值写入后,读出来是1178,需要研发修改')        
+    def test_write_current_limit1(self):
+        self.print_test_info(status=self.TEST_START, info='write finger current limit1,The normal range is [0,1200], and the out-of-range values fall within {1201,65535}')
+        verify_sets = [
+            0,# 0
+            600,# 600
+            1200,# 1200
+            1201,# 1201
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT1, data=value)
-    #             data = value
-    #             if index > 2: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT1, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT1, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_CURRENT_LIMIT1}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_CURRENT_LIMIT1}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_CURRENT_LIMIT1}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_CURRENT_LIMIT1}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT1, data=value)
+                data = value
+                if index > 2: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT1, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT1, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_CURRENT_LIMIT1}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_CURRENT_LIMIT1}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_CURRENT_LIMIT1}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_CURRENT_LIMIT1}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT1, data=FINGER_CURRENT_LIMIT1)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT1, data=FINGER_CURRENT_LIMIT1)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_current_limit2(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger current limit2')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT2, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT2}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT2}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_CURRENT_LIMIT2}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT2}>失败,发生异常')
+    def test_read_finger_current_limit2(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger current limit2')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT2, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT2}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT2}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_CURRENT_LIMIT2}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT2}>失败,发生异常')
     
-    # # @pytest.mark.skip('1200边界值写入后,读出来是1178,需要研发修改')        
-    # def test_write_current_limit2(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger current limit2,The normal range is [0,1200], and the out-of-range values fall within {1201,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         600,# 600
-    #         1200,# 1200
-    #         1201,# 1201
-    #         65535# 65535 
-    #     ]
+    # @pytest.mark.skip('1200边界值写入后,读出来是1178,需要研发修改')        
+    def test_write_current_limit2(self):
+        self.print_test_info(status=self.TEST_START, info='write finger current limit2,The normal range is [0,1200], and the out-of-range values fall within {1201,65535}')
+        verify_sets = [
+            0,# 0
+            600,# 600
+            1200,# 1200
+            1201,# 1201
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT2, data=value)
-    #             data = value
-    #             if index > 2: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT2, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT2, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_CURRENT_LIMIT2}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_CURRENT_LIMIT2}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_CURRENT_LIMIT2}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_CURRENT_LIMIT2}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT2, data=value)
+                data = value
+                if index > 2: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT2, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT2, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_CURRENT_LIMIT2}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_CURRENT_LIMIT2}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_CURRENT_LIMIT2}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_CURRENT_LIMIT2}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT2, data=FINGER_CURRENT_LIMIT2)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT2, data=FINGER_CURRENT_LIMIT2)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_current_limit3(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger current limit3')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT3, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT3}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT3}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_CURRENT_LIMIT3}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT3}>失败,发生异常')
+    def test_read_finger_current_limit3(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger current limit3')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT3, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT3}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT3}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_CURRENT_LIMIT3}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT3}>失败,发生异常')
     
-    # # @pytest.mark.skip('1200边界值写入后,读出来是1178,需要研发修改')        
-    # def test_write_current_limit3(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger current limit3,The normal range is [0,1200], and the out-of-range values fall within {1201,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         600,# 600
-    #         1200,# 1200
-    #         1201,# 1201
-    #         65535# 65535 
-    #     ]
+    # @pytest.mark.skip('1200边界值写入后,读出来是1178,需要研发修改')        
+    def test_write_current_limit3(self):
+        self.print_test_info(status=self.TEST_START, info='write finger current limit3,The normal range is [0,1200], and the out-of-range values fall within {1201,65535}')
+        verify_sets = [
+            0,# 0
+            600,# 600
+            1200,# 1200
+            1201,# 1201
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT3, data=value)
-    #             data = value
-    #             if index > 2: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT3, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT3, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_CURRENT_LIMIT3}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_CURRENT_LIMIT3}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_CURRENT_LIMIT3}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_CURRENT_LIMIT3}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT3, data=value)
+                data = value
+                if index > 2: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT3, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT3, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_CURRENT_LIMIT3}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_CURRENT_LIMIT3}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_CURRENT_LIMIT3}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_CURRENT_LIMIT3}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT3, data=FINGER_CURRENT_LIMIT3)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT3, data=FINGER_CURRENT_LIMIT3)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_current_limit4(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger current limit4')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT4, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT4}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT4}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_CURRENT_LIMIT4}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT4}>失败,发生异常')
+    def test_read_finger_current_limit4(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger current limit4')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT4, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT4}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT4}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_CURRENT_LIMIT4}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT4}>失败,发生异常')
     
-    # # @pytest.mark.skip('1200边界值写入后,读出来是1178,需要研发修改')        
-    # def test_write_current_limit4(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger current limit4,The normal range is [0,1200], and the out-of-range values fall within {1201,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         600,# 600
-    #         1200,# 1200
-    #         1201,# 1201
-    #         65535# 65535 
-    #     ]
+    # @pytest.mark.skip('1200边界值写入后,读出来是1178,需要研发修改')        
+    def test_write_current_limit4(self):
+        self.print_test_info(status=self.TEST_START, info='write finger current limit4,The normal range is [0,1200], and the out-of-range values fall within {1201,65535}')
+        verify_sets = [
+            0,# 0
+            600,# 600
+            1200,# 1200
+            1201,# 1201
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT4, data=value)
-    #             data = value
-    #             if index > 2: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT4, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT4, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_CURRENT_LIMIT4}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_CURRENT_LIMIT4}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_CURRENT_LIMIT4}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_CURRENT_LIMIT4}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT4, data=value)
+                data = value
+                if index > 2: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT4, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT4, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_CURRENT_LIMIT4}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_CURRENT_LIMIT4}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_CURRENT_LIMIT4}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_CURRENT_LIMIT4}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT4, data=FINGER_CURRENT_LIMIT4)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT4, data=FINGER_CURRENT_LIMIT4)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_current_limit5(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger current limit5')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT5, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT5}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT5}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_CURRENT_LIMIT5}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT5}>失败,发生异常')
+    def test_read_finger_current_limit5(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger current limit5')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT5, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT5}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT5}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_CURRENT_LIMIT5}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT_LIMIT5}>失败,发生异常')
     
-    # # @pytest.mark.skip('1200边界值写入后,读出来是1178,需要研发修改')        
-    # def test_write_current_limit5(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger current limit5,The normal range is [0,1200], and the out-of-range values fall within {1201,65535}')
-    #     verify_sets = [
-    #         0,# 0
-    #         600,# 600
-    #         1200,# 1200
-    #         1201,# 1201
-    #         65535# 65535 
-    #     ]
+    # @pytest.mark.skip('1200边界值写入后,读出来是1178,需要研发修改')        
+    def test_write_current_limit5(self):
+        self.print_test_info(status=self.TEST_START, info='write finger current limit5,The normal range is [0,1200], and the out-of-range values fall within {1201,65535}')
+        verify_sets = [
+            0,# 0
+            600,# 600
+            1200,# 1200
+            1201,# 1201
+            65535# 65535 
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT5, data=value)
-    #             data = value
-    #             if index > 2: # 异常值写进去不生效,底层不报错
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT5, register_count=1)
-    #                 assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
-    #                 logger.info(f"成功检测出超出范围的值{data}\n")
-    #             else:
-    #                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT5, register_count=1)
-    #                 assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_CURRENT_LIMIT5}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #                 logger.info(f"从寄存器{ROH_FINGER_CURRENT_LIMIT5}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_CURRENT_LIMIT5}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_CURRENT_LIMIT5}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT5, data=value)
+                data = value
+                if index > 2: # 异常值写进去不生效,底层不报错
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT5, register_count=1)
+                    assert read_response.registers[0] != data, f"超出范围的值{data}未被检测出\n"
+                    logger.info(f"成功检测出超出范围的值{data}\n")
+                else:
+                    read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT5, register_count=1)
+                    assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_CURRENT_LIMIT5}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                    logger.info(f"从寄存器{ROH_FINGER_CURRENT_LIMIT5}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_CURRENT_LIMIT5}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_CURRENT_LIMIT5}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT5, data=FINGER_CURRENT_LIMIT5)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT5, data=FINGER_CURRENT_LIMIT5)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_current0(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger current0')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT0, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT0}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_CURRENT0}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_CURRENT0}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT0}>失败,发生异常')
+    def test_read_finger_current0(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger current0')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT0, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT0}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_CURRENT0}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_CURRENT0}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT0}>失败,发生异常')
             
-    # def test_read_finger_current1(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger current1')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT1, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT1}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_CURRENT1}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_CURRENT1}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT1}>失败,发生异常')
+    def test_read_finger_current1(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger current1')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT1, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT1}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_CURRENT1}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_CURRENT1}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT1}>失败,发生异常')
             
-    # def test_read_finger_current2(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger current2')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT2, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT2}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_CURRENT2}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_CURRENT2}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT2}>失败,发生异常')
+    def test_read_finger_current2(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger current2')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT2, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT2}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_CURRENT2}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_CURRENT2}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT2}>失败,发生异常')
             
-    # def test_read_finger_current3(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger current3')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT3, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT3}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_CURRENT3}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_CURRENT3}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT3}>失败,发生异常')
+    def test_read_finger_current3(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger current3')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT3, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT3}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_CURRENT3}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_CURRENT3}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT3}>失败,发生异常')
             
-    # def test_read_finger_current4(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger current4')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT4, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT4}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_CURRENT4}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_CURRENT4}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT4}>失败,发生异常')
+    def test_read_finger_current4(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger current4')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT4, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT4}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_CURRENT4}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_CURRENT4}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT4}>失败,发生异常')
             
-    # def test_read_finger_current5(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger current5')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT5, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT5}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_CURRENT5}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_CURRENT5}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT5}>失败,发生异常')
+    def test_read_finger_current5(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger current5')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT5, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_CURRENT5}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_CURRENT5}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_CURRENT5}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT5}>失败,发生异常')
     
-    # @pytest.mark.skip('力传感器暂未添加，先跳过')
-    # def test_read_finger_force_limit0(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger force limit0')
-    #     pass
+    @pytest.mark.skip('力传感器暂未添加，先跳过')
+    def test_read_finger_force_limit0(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger force limit0')
+        pass
     
-    # @pytest.mark.skip('力传感器暂未添加，先跳过')
-    # def test_write_finger_force_limit0(self):
-    #     self.print_test_info(status=self.TEST_START,info='write finger force limit0')
-    #     pass
+    @pytest.mark.skip('力传感器暂未添加，先跳过')
+    def test_write_finger_force_limit0(self):
+        self.print_test_info(status=self.TEST_START,info='write finger force limit0')
+        pass
     
-    # @pytest.mark.skip('力传感器暂未添加，先跳过')
-    # def test_read_finger_force_limit1(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger force limit1')
-    #     pass
+    @pytest.mark.skip('力传感器暂未添加，先跳过')
+    def test_read_finger_force_limit1(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger force limit1')
+        pass
     
-    # @pytest.mark.skip('力传感器暂未添加，先跳过')
-    # def test_write_finger_force_limit1(self):
-    #     self.print_test_info(status=self.TEST_START,info='write finger force limit1')
-    #     pass
+    @pytest.mark.skip('力传感器暂未添加，先跳过')
+    def test_write_finger_force_limit1(self):
+        self.print_test_info(status=self.TEST_START,info='write finger force limit1')
+        pass
     
-    # @pytest.mark.skip('力传感器暂未添加，先跳过')
-    # def test_read_finger_force_limit2(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger force limit2')
-    #     pass
+    @pytest.mark.skip('力传感器暂未添加，先跳过')
+    def test_read_finger_force_limit2(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger force limit2')
+        pass
     
-    # @pytest.mark.skip('力传感器暂未添加，先跳过')
-    # def test_write_finger_force_limit2(self):
-    #     self.print_test_info(status=self.TEST_START,info='write finger force limit2')
-    #     pass
+    @pytest.mark.skip('力传感器暂未添加，先跳过')
+    def test_write_finger_force_limit2(self):
+        self.print_test_info(status=self.TEST_START,info='write finger force limit2')
+        pass
     
-    # @pytest.mark.skip('力传感器暂未添加，先跳过')
-    # def test_read_finger_force_limit3(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger force limit3')
-    #     pass
+    @pytest.mark.skip('力传感器暂未添加，先跳过')
+    def test_read_finger_force_limit3(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger force limit3')
+        pass
     
-    # @pytest.mark.skip('力传感器暂未添加，先跳过')
-    # def test_write_finger_force_limit3(self):
-    #     self.print_test_info(status=self.TEST_START,info='write finger force limit3')
-    #     pass
+    @pytest.mark.skip('力传感器暂未添加，先跳过')
+    def test_write_finger_force_limit3(self):
+        self.print_test_info(status=self.TEST_START,info='write finger force limit3')
+        pass
     
-    # @pytest.mark.skip('力传感器暂未添加，先跳过')
-    # def test_read_finger_force_limit4(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger force limit4')
-    #     pass
+    @pytest.mark.skip('力传感器暂未添加，先跳过')
+    def test_read_finger_force_limit4(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger force limit4')
+        pass
     
-    # @pytest.mark.skip('力传感器暂未添加，先跳过')
-    # def test_write_finger_force_limit4(self):
-    #     self.print_test_info(status=self.TEST_START,info='write finger force limit4')
-    #     pass
+    @pytest.mark.skip('力传感器暂未添加，先跳过')
+    def test_write_finger_force_limit4(self):
+        self.print_test_info(status=self.TEST_START,info='write finger force limit4')
+        pass
     
-    # @pytest.mark.skip('力传感器暂未添加，先跳过')
-    # def test_read_finger_force_limit5(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger force limit5')
-    #     pass
+    @pytest.mark.skip('力传感器暂未添加，先跳过')
+    def test_read_finger_force_limit5(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger force limit5')
+        pass
     
-    # @pytest.mark.skip('力传感器暂未添加，先跳过')
-    # def test_write_finger_force_limit5(self):
-    #     self.print_test_info(status=self.TEST_START,info='write finger force limit5')
-    #     pass
+    @pytest.mark.skip('力传感器暂未添加，先跳过')
+    def test_write_finger_force_limit5(self):
+        self.print_test_info(status=self.TEST_START,info='write finger force limit5')
+        pass
     
-    # def test_read_finger_force0(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger force0')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_FORCE0, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_FORCE0}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_FORCE0}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_FORCE0}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_FORCE0}>失败,发生异常')
+    def test_read_finger_force0(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger force0')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_FORCE0, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_FORCE0}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_FORCE0}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_FORCE0}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_FORCE0}>失败,发生异常')
             
-    # def test_read_finger_force1(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger force1')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_FORCE1, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_FORCE1}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_FORCE1}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_FORCE1}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_FORCE1}>失败,发生异常')
+    def test_read_finger_force1(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger force1')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_FORCE1, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_FORCE1}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_FORCE1}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_FORCE1}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_FORCE1}>失败,发生异常')
             
-    # def test_read_finger_force2(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger force2')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_FORCE2, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_FORCE2}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_FORCE2}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_FORCE2}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_FORCE2}>失败,发生异常')
+    def test_read_finger_force2(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger force2')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_FORCE2, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_FORCE2}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_FORCE2}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_FORCE2}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_FORCE2}>失败,发生异常')
             
-    # def test_read_finger_force3(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger force3')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_FORCE3, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_FORCE3}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_FORCE3}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_FORCE3}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_FORCE3}>失败,发生异常')
+    def test_read_finger_force3(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger force3')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_FORCE3, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_FORCE3}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_FORCE3}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_FORCE3}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_FORCE3}>失败,发生异常')
             
-    # def test_read_finger_force4(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger force4')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_FORCE4, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_FORCE4}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_FORCE4}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_FORCE4}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_FORCE4}>失败,发生异常')
+    def test_read_finger_force4(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger force4')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_FORCE4, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_FORCE4}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_FORCE4}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_FORCE4}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_FORCE4}>失败,发生异常')
             
-    # def test_read_finger_speed0(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger speed0')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED0, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_SPEED0}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_SPEED0}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_SPEED0}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_SPEED0}>失败,发生异常')
+    def test_read_finger_speed0(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger speed0')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED0, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_SPEED0}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_SPEED0}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_SPEED0}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_SPEED0}>失败,发生异常')
             
-    # def test_write_finger_speed0(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger speed0,The normal range is [0,65535]')
-    #     verify_sets = [
-    #         0, 
-    #         1,
-    #         32767,
-    #         65535
-    #     ]
+    def test_write_finger_speed0(self):
+        self.print_test_info(status=self.TEST_START, info='write finger speed0,The normal range is [0,65535]')
+        verify_sets = [
+            0, 
+            1,
+            32767,
+            65535
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_SPEED0, data=value)
-    #             data = value
-    #             read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED0, register_count=1)
-    #             assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_SPEED0}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #             logger.info(f"从寄存器{ROH_FINGER_SPEED0}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_SPEED0}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_SPEED0}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_SPEED0, data=value)
+                data = value
+                read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED0, register_count=1)
+                assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_SPEED0}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                logger.info(f"从寄存器{ROH_FINGER_SPEED0}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_SPEED0}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_SPEED0}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_SPEED0, data=FINGER_SPEED0)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_SPEED0, data=FINGER_SPEED0)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_speed1(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger speed1')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED1, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_SPEED1}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_SPEED1}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_SPEED1}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_SPEED1}>失败,发生异常')
+    def test_read_finger_speed1(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger speed1')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED1, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_SPEED1}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_SPEED1}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_SPEED1}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_SPEED1}>失败,发生异常')
             
-    # def test_write_finger_speed1(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger speed1,The normal range is [0,65535]')
-    #     verify_sets = [
-    #         0, 
-    #         1,
-    #         32767,
-    #         65535
-    #     ]
+    def test_write_finger_speed1(self):
+        self.print_test_info(status=self.TEST_START, info='write finger speed1,The normal range is [0,65535]')
+        verify_sets = [
+            0, 
+            1,
+            32767,
+            65535
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_SPEED1, data=value)
-    #             data = value
-    #             read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED1, register_count=1)
-    #             assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_SPEED1}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #             logger.info(f"从寄存器{ROH_FINGER_SPEED1}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_SPEED1}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_SPEED1}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_SPEED1, data=value)
+                data = value
+                read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED1, register_count=1)
+                assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_SPEED1}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                logger.info(f"从寄存器{ROH_FINGER_SPEED1}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_SPEED1}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_SPEED1}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_SPEED1, data=FINGER_SPEED1)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_SPEED1, data=FINGER_SPEED1)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_speed2(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger speed2')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED2, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_SPEED2}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_SPEED2}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_SPEED2}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_SPEED2}>失败,发生异常')
+    def test_read_finger_speed2(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger speed2')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED2, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_SPEED2}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_SPEED2}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_SPEED2}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_SPEED2}>失败,发生异常')
             
-    # def test_write_finger_speed2(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger speed2,The normal range is [0,65535]')
-    #     verify_sets = [
-    #         0, 
-    #         1,
-    #         32767,
-    #         65535
-    #     ]
+    def test_write_finger_speed2(self):
+        self.print_test_info(status=self.TEST_START, info='write finger speed2,The normal range is [0,65535]')
+        verify_sets = [
+            0, 
+            1,
+            32767,
+            65535
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_SPEED2, data=value)
-    #             data = value
-    #             read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED2, register_count=1)
-    #             assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_SPEED2}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #             logger.info(f"从寄存器{ROH_FINGER_SPEED2}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_SPEED2}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_SPEED2}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_SPEED2, data=value)
+                data = value
+                read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED2, register_count=1)
+                assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_SPEED2}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                logger.info(f"从寄存器{ROH_FINGER_SPEED2}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_SPEED2}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_SPEED2}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_SPEED2, data=FINGER_SPEED2)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_SPEED2, data=FINGER_SPEED2)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_speed3(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger speed3')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED3, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_SPEED3}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_SPEED3}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_SPEED3}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_SPEED3}>失败,发生异常')
+    def test_read_finger_speed3(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger speed3')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED3, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_SPEED3}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_SPEED3}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_SPEED3}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_SPEED3}>失败,发生异常')
             
-    # def test_write_finger_speed3(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger speed3,The normal range is [0,65535]')
-    #     verify_sets = [
-    #         0, 
-    #         1,
-    #         32767,
-    #         65535
-    #     ]
+    def test_write_finger_speed3(self):
+        self.print_test_info(status=self.TEST_START, info='write finger speed3,The normal range is [0,65535]')
+        verify_sets = [
+            0, 
+            1,
+            32767,
+            65535
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_SPEED3, data=value)
-    #             data = value
-    #             read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED3, register_count=1)
-    #             assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_SPEED3}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #             logger.info(f"从寄存器{ROH_FINGER_SPEED3}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_SPEED3}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_SPEED3}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_SPEED3, data=value)
+                data = value
+                read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED3, register_count=1)
+                assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_SPEED3}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                logger.info(f"从寄存器{ROH_FINGER_SPEED3}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_SPEED3}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_SPEED3}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_SPEED3, data=FINGER_SPEED3)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_SPEED3, data=FINGER_SPEED3)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_speed4(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger speed4')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED4, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_SPEED4}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_SPEED4}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_SPEED4}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_SPEED4}>失败,发生异常')
+    def test_read_finger_speed4(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger speed4')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED4, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_SPEED4}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_SPEED4}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_SPEED4}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_SPEED4}>失败,发生异常')
             
-    # def test_write_finger_speed4(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger speed4,The normal range is [0,65535]')
-    #     verify_sets = [
-    #         0, 
-    #         1,
-    #         32767,
-    #         65535
-    #     ]
+    def test_write_finger_speed4(self):
+        self.print_test_info(status=self.TEST_START, info='write finger speed4,The normal range is [0,65535]')
+        verify_sets = [
+            0, 
+            1,
+            32767,
+            65535
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_SPEED4, data=value)
-    #             data = value
-    #             read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED4, register_count=1)
-    #             assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_SPEED4}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #             logger.info(f"从寄存器{ROH_FINGER_SPEED4}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_SPEED4}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_SPEED4}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_SPEED4, data=value)
+                data = value
+                read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED4, register_count=1)
+                assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_SPEED4}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                logger.info(f"从寄存器{ROH_FINGER_SPEED4}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_SPEED4}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_SPEED4}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_SPEED4, data=FINGER_SPEED4)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_SPEED4, data=FINGER_SPEED4)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_speed5(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger speed5')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED5, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_SPEED5}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_SPEED5}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_SPEED5}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_SPEED5}>失败,发生异常')
+    def test_read_finger_speed5(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger speed5')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED5, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_SPEED5}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_SPEED5}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_SPEED5}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_SPEED5}>失败,发生异常')
             
-    # def test_write_finger_speed5(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger speed5,The normal range is [0,65535]')
-    #     verify_sets = [
-    #         0, 
-    #         1,
-    #         32767,
-    #         65535
-    #     ]
+    def test_write_finger_speed5(self):
+        self.print_test_info(status=self.TEST_START, info='write finger speed5,The normal range is [0,65535]')
+        verify_sets = [
+            0, 
+            1,
+            32767,
+            65535
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_SPEED5, data=value)
-    #             data = value
-    #             read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED5, register_count=1)
-    #             assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_SPEED5}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
-    #             logger.info(f"从寄存器{ROH_FINGER_SPEED5}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_SPEED5}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_SPEED5}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_SPEED5, data=value)
+                data = value
+                read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_SPEED5, register_count=1)
+                assert read_response.registers[0] == data, f"从寄存器{ROH_FINGER_SPEED5}读出的值{read_response.registers[0]}与写入的值{data}不匹配"
+                logger.info(f"从寄存器{ROH_FINGER_SPEED5}读出的值{read_response.registers[0]}与写入的值{data}匹配成功\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_SPEED5}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_SPEED5}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_SPEED5, data=FINGER_SPEED5)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_SPEED5, data=FINGER_SPEED5)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_pos_target0(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger pos target0')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET0, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_POS_TARGET0}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_POS_TARGET0}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_POS_TARGET0}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_POS_TARGET0}>失败,发生异常')
+    def test_read_finger_pos_target0(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger pos target0')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET0, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_POS_TARGET0}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_POS_TARGET0}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_POS_TARGET0}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_POS_TARGET0}>失败,发生异常')
             
-    # def test_write_finger_pos_target0(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger pos target0,The normal range is [0,65535]')
-    #     verify_sets = [
-    #         0, 
-    #         1,
-    #         32767,
-    #         32768,
-    #         65535
-    #     ]
+    def test_write_finger_pos_target0(self):
+        self.print_test_info(status=self.TEST_START, info='write finger pos target0,The normal range is [0,65535]')
+        verify_sets = [
+            0, 
+            1,
+            32767,
+            32768,
+            65535
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET0, data=value)
-    #             data = value
-    #             read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET0, register_count=1)
-    #             assert abs(read_response.registers[0] - data) <= FINGER_POS_TARGET_MAX_LOSS, f"从寄存器{ROH_FINGER_POS_TARGET0}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n"
-    #             logger.info(f"从寄存器{ROH_FINGER_POS_TARGET0}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_POS_TARGET0}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_POS_TARGET0}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET0, data=value)
+                data = value
+                read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET0, register_count=1)
+                assert abs(read_response.registers[0] - data) <= FINGER_POS_TARGET_MAX_LOSS, f"从寄存器{ROH_FINGER_POS_TARGET0}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n"
+                logger.info(f"从寄存器{ROH_FINGER_POS_TARGET0}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_POS_TARGET0}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_POS_TARGET0}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET0, data=FINGER_POS_TARGET0)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET0, data=FINGER_POS_TARGET0)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_pos_target1(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger pos target1')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET1, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_POS_TARGET1}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_POS_TARGET1}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_POS_TARGET1}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_POS_TARGET1}>失败,发生异常')
+    def test_read_finger_pos_target1(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger pos target1')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET1, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_POS_TARGET1}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_POS_TARGET1}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_POS_TARGET1}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_POS_TARGET1}>失败,发生异常')
             
-    # def test_write_finger_pos_target1(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger pos target1,The normal range is [0,65535]')
-    #     verify_sets = [
-    #         0, 
-    #         1,
-    #         32767,
-    #         32768,
-    #         65535
-    #     ]
+    def test_write_finger_pos_target1(self):
+        self.print_test_info(status=self.TEST_START, info='write finger pos target1,The normal range is [0,65535]')
+        verify_sets = [
+            0, 
+            1,
+            32767,
+            32768,
+            65535
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET1, data=value)
-    #             data = value
-    #             read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET1, register_count=1)
-    #             assert abs(read_response.registers[0] - data) <= FINGER_POS_TARGET_MAX_LOSS, f"从寄存器{ROH_FINGER_POS_TARGET1}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n"
-    #             logger.info(f"从寄存器{ROH_FINGER_POS_TARGET1}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_POS_TARGET1}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_POS_TARGET1}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET1, data=value)
+                data = value
+                read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET1, register_count=1)
+                assert abs(read_response.registers[0] - data) <= FINGER_POS_TARGET_MAX_LOSS, f"从寄存器{ROH_FINGER_POS_TARGET1}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n"
+                logger.info(f"从寄存器{ROH_FINGER_POS_TARGET1}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_POS_TARGET1}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_POS_TARGET1}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET1, data=FINGER_POS_TARGET1)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET1, data=FINGER_POS_TARGET1)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_pos_target2(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger pos target2')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET2, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_POS_TARGET2}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_POS_TARGET2}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_POS_TARGET2}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_POS_TARGET2}>失败,发生异常')
+    def test_read_finger_pos_target2(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger pos target2')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET2, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_POS_TARGET2}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_POS_TARGET2}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_POS_TARGET2}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_POS_TARGET2}>失败,发生异常')
             
-    # def test_write_finger_pos_target2(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger pos target2,The normal range is [0,65535]')
-    #     verify_sets = [
-    #         0, 
-    #         1,
-    #         32767,
-    #         32768,
-    #         65535
-    #     ]
+    def test_write_finger_pos_target2(self):
+        self.print_test_info(status=self.TEST_START, info='write finger pos target2,The normal range is [0,65535]')
+        verify_sets = [
+            0, 
+            1,
+            32767,
+            32768,
+            65535
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET2, data=value)
-    #             data = value
-    #             read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET2, register_count=1)
-    #             assert abs(read_response.registers[0] - data) <= FINGER_POS_TARGET_MAX_LOSS, f"从寄存器{ROH_FINGER_POS_TARGET2}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n"
-    #             logger.info(f"从寄存器{ROH_FINGER_POS_TARGET2}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_POS_TARGET2}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_POS_TARGET2}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET2, data=value)
+                data = value
+                read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET2, register_count=1)
+                assert abs(read_response.registers[0] - data) <= FINGER_POS_TARGET_MAX_LOSS, f"从寄存器{ROH_FINGER_POS_TARGET2}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n"
+                logger.info(f"从寄存器{ROH_FINGER_POS_TARGET2}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_POS_TARGET2}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_POS_TARGET2}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET2, data=FINGER_POS_TARGET2)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET2, data=FINGER_POS_TARGET2)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_pos_target3(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger pos target3')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET3, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_POS_TARGET3}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_POS_TARGET3}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_POS_TARGET3}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_POS_TARGET3}>失败,发生异常')
+    def test_read_finger_pos_target3(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger pos target3')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET3, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_POS_TARGET3}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_POS_TARGET3}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_POS_TARGET3}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_POS_TARGET3}>失败,发生异常')
             
-    # def test_write_finger_pos_target3(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger pos target3,The normal range is [0,65535]')
-    #     verify_sets = [
-    #         0, 
-    #         1,
-    #         32767,
-    #         32768,
-    #         65535
-    #     ]
+    def test_write_finger_pos_target3(self):
+        self.print_test_info(status=self.TEST_START, info='write finger pos target3,The normal range is [0,65535]')
+        verify_sets = [
+            0, 
+            1,
+            32767,
+            32768,
+            65535
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET3, data=value)
-    #             data = value
-    #             read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET3, register_count=1)
-    #             assert abs(read_response.registers[0] - data) <= FINGER_POS_TARGET_MAX_LOSS, f"从寄存器{ROH_FINGER_POS_TARGET3}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n"
-    #             logger.info(f"从寄存器{ROH_FINGER_POS_TARGET3}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_POS_TARGET3}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_POS_TARGET3}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET3, data=value)
+                data = value
+                read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET3, register_count=1)
+                assert abs(read_response.registers[0] - data) <= FINGER_POS_TARGET_MAX_LOSS, f"从寄存器{ROH_FINGER_POS_TARGET3}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n"
+                logger.info(f"从寄存器{ROH_FINGER_POS_TARGET3}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_POS_TARGET3}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_POS_TARGET3}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET3, data=FINGER_POS_TARGET3)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET3, data=FINGER_POS_TARGET3)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_pos_target4(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger pos target4')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET4, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_POS_TARGET4}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_POS_TARGET4}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_POS_TARGET4}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_POS_TARGET4}>失败,发生异常')
+    def test_read_finger_pos_target4(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger pos target4')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET4, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_POS_TARGET4}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_POS_TARGET4}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_POS_TARGET4}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_POS_TARGET4}>失败,发生异常')
             
-    # def test_write_finger_pos_target4(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger pos target4,The normal range is [0,65535]')
-    #     verify_sets = [
-    #         0, 
-    #         1,
-    #         32767,
-    #         32768,
-    #         65535
-    #     ]
+    def test_write_finger_pos_target4(self):
+        self.print_test_info(status=self.TEST_START, info='write finger pos target4,The normal range is [0,65535]')
+        verify_sets = [
+            0, 
+            1,
+            32767,
+            32768,
+            65535
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET4, data=value)
-    #             data = value
-    #             read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET4, register_count=1)
-    #             assert abs(read_response.registers[0] - data) <= FINGER_POS_TARGET_MAX_LOSS, f"从寄存器{ROH_FINGER_POS_TARGET4}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n"
-    #             logger.info(f"从寄存器{ROH_FINGER_POS_TARGET4}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_POS_TARGET4}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_POS_TARGET4}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET4, data=value)
+                data = value
+                read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET4, register_count=1)
+                assert abs(read_response.registers[0] - data) <= FINGER_POS_TARGET_MAX_LOSS, f"从寄存器{ROH_FINGER_POS_TARGET4}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n"
+                logger.info(f"从寄存器{ROH_FINGER_POS_TARGET4}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_POS_TARGET4}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_POS_TARGET4}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET4, data=FINGER_POS_TARGET4)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET4, data=FINGER_POS_TARGET4)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_pos_target5(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger pos target5')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET5, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_POS_TARGET5}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_POS_TARGET5}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_POS_TARGET5}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_POS_TARGET5}>失败,发生异常')
+    def test_read_finger_pos_target5(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger pos target5')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET5, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_POS_TARGET5}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_POS_TARGET5}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_POS_TARGET5}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_POS_TARGET5}>失败,发生异常')
     
-    # def test_write_finger_pos_target5(self): #从寄存器1140读出的值728与写入的值0比较
-    #     self.print_test_info(status=self.TEST_START, info='write finger pos target5,The normal range is [0,65535]')
-    #     verify_sets = [
-    #         0, 
-    #         1,
-    #         32767,
-    #         32768,
-    #         65535
-    #     ]
+    def test_write_finger_pos_target5(self): #从寄存器1140读出的值728与写入的值0比较
+        self.print_test_info(status=self.TEST_START, info='write finger pos target5,The normal range is [0,65535]')
+        verify_sets = [
+            0, 
+            1,
+            32767,
+            32768,
+            65535
+        ]
         
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET5, data=value)
-    #             data = value
-    #             read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET5, register_count=1)
-    #             assert abs(read_response.registers[0] - data) <= FINGER_POS_TARGET_MAX_LOSS, f"从寄存器{ROH_FINGER_POS_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n"
-    #             logger.info(f"从寄存器{ROH_FINGER_POS_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_POS_TARGET5}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_POS_TARGET5}>失败,发生异常')
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET5, data=value)
+                data = value
+                read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET5, register_count=1)
+                assert abs(read_response.registers[0] - data) <= FINGER_POS_TARGET_MAX_LOSS, f"从寄存器{ROH_FINGER_POS_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n"
+                logger.info(f"从寄存器{ROH_FINGER_POS_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_POS_TARGET5}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_POS_TARGET5}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET5, data=FINGER_POS_TARGET5)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET5, data=FINGER_POS_TARGET5)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
  
-    # def test_read_finger_pos0(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger pos0')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS0, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_POS0}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_POS0}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_POS0}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_POS0}>失败,发生异常')
+    def test_read_finger_pos0(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger pos0')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS0, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_POS0}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_POS0}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_POS0}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_POS0}>失败,发生异常')
     
-    # def test_read_finger_pos1(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger pos1')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS1, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_POS1}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_POS1}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_POS1}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_POS1}>失败,发生异常')
+    def test_read_finger_pos1(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger pos1')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS1, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_POS1}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_POS1}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_POS1}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_POS1}>失败,发生异常')
             
-    # def test_read_finger_pos2(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger pos2')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS2, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_POS2}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_POS2}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_POS2}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_POS2}>失败,发生异常')
+    def test_read_finger_pos2(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger pos2')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS2, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_POS2}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_POS2}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_POS2}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_POS2}>失败,发生异常')
             
-    # def test_read_finger_pos3(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger pos3')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS3, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_POS3}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_POS3}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_POS3}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_POS3}>失败,发生异常')
+    def test_read_finger_pos3(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger pos3')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS3, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_POS3}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_POS3}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_POS3}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_POS3}>失败,发生异常')
             
-    # def test_read_finger_pos4(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger pos4')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS4, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_POS4}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_POS4}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_POS4}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_POS4}>失败,发生异常')
+    def test_read_finger_pos4(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger pos4')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS4, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_POS4}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_POS4}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_POS4}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_POS4}>失败,发生异常')
             
-    # def test_read_finger_pos5(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-    #     self.print_test_info(status=self.TEST_START,info='read finger pos5')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS5, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_POS5}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_POS5}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_POS5}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_POS5}>失败,发生异常')
+    def test_read_finger_pos5(self):                                                                                                                                                                                                                                                                                                                                                                                                           
+        self.print_test_info(status=self.TEST_START,info='read finger pos5')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS5, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_POS5}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_POS5}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_POS5}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_POS5}>失败,发生异常')
             
-    # def get_min_angle(self,addr):
-    #     values = 0
-    #     if write_registers(bus=self.bus,start_address=addr,data=values):
-    #        response = read_registers(bus=self.bus,start_address=addr,register_count=1)
-    #        logger.info(f'get min angle : {addr} ->{response.registers[0]}')
-    #        return response.registers[0]
-    #     else:
-    #         logger.info(f'get min angle : {addr} 尝试获取最小值失败')
-    #         return 0
+    def get_min_angle(self,addr):
+        values = 0
+        if write_registers(bus=self.bus,start_address=addr,data=values):
+           response = read_registers(bus=self.bus,start_address=addr,register_count=1)
+           logger.info(f'get min angle : {addr} ->{response.registers[0]}')
+           return response.registers[0]
+        else:
+            logger.info(f'get min angle : {addr} 尝试获取最小值失败')
+            return 0
         
-    # def get_max_angle(self,addr):
-    #     values = 32767
-    #     if write_registers(bus=self.bus,start_address=addr,data=values):
-    #        response = read_registers(bus=self.bus,start_address=addr,register_count=1)
-    #        logger.info(f'get max angle : {addr} ->{response.registers[0]}')
-    #        return response.registers[0]
-    #     else:
-    #         logger.info(f'get max angle : {addr} 尝试获取最大值失败')
-    #         return 32767
+    def get_max_angle(self,addr):
+        values = 32767
+        if write_registers(bus=self.bus,start_address=addr,data=values):
+           response = read_registers(bus=self.bus,start_address=addr,register_count=1)
+           logger.info(f'get max angle : {addr} ->{response.registers[0]}')
+           return response.registers[0]
+        else:
+            logger.info(f'get max angle : {addr} 尝试获取最大值失败')
+            return 32767
         
-    # # def to_hex_array(self, decimal_num):
-    # #     # 将十进制数转换为两个字节的十六进制数组
-    # #     hex_bytes = [(decimal_num & 0xFF), ((decimal_num >> 8) & 0xFF)]
-    # #     return hex_bytes   
+    # def to_hex_array(self, decimal_num):
+    #     # 将十进制数转换为两个字节的十六进制数组
+    #     hex_bytes = [(decimal_num & 0xFF), ((decimal_num >> 8) & 0xFF)]
+    #     return hex_bytes   
             
-    # def test_read_finger_angle_target0(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger angle target0')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET0, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE_TARGET0}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET0}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_ANGLE_TARGET0}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET0}>失败,发生异常')
+    def test_read_finger_angle_target0(self):
+        self.print_test_info(status=self.TEST_START,info='read finger angle target0')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET0, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE_TARGET0}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET0}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_ANGLE_TARGET0}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET0}>失败,发生异常')
             
-    # def test_write_finger_angle_target0(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger angle target0,The normal range is [0,65535]')
-    #     MIN_ANGLE = self.get_min_angle(addr=ROH_FINGER_ANGLE_TARGET0)
-    #     MAX_ANGLE = self.get_max_angle(addr=ROH_FINGER_ANGLE_TARGET0)
-    #     NORMAL_ANGLE= int(MIN_ANGLE + (MAX_ANGLE - MIN_ANGLE)/2)
-    #     verify_sets = [
-    #         0, 
-    #         MIN_ANGLE,
-    #         NORMAL_ANGLE,
-    #         MAX_ANGLE,
-    #         32767,#32767,max value
-    #         32768,#32768,min value
-    #         65535#65535,min value
-    #     ]
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET0, data=value)
-    #             data = value
-    #             read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET0, register_count=1)
-    #             if index == 0:
-    #                 assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET0}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             elif index in (1,2,3):
-    #                 assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET0}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             elif index == 4:
-    #                  assert read_response.registers[0] == MAX_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET0}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             else:
-    #                 assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET0}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             logger.info(f"从寄存器{ROH_FINGER_ANGLE_TARGET0}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_ANGLE_TARGET0}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_ANGLE_TARGET0}>失败,发生异常')
+    def test_write_finger_angle_target0(self):
+        self.print_test_info(status=self.TEST_START, info='write finger angle target0,The normal range is [0,65535]')
+        MIN_ANGLE = self.get_min_angle(addr=ROH_FINGER_ANGLE_TARGET0)
+        MAX_ANGLE = self.get_max_angle(addr=ROH_FINGER_ANGLE_TARGET0)
+        NORMAL_ANGLE= int(MIN_ANGLE + (MAX_ANGLE - MIN_ANGLE)/2)
+        verify_sets = [
+            0, 
+            MIN_ANGLE,
+            NORMAL_ANGLE,
+            MAX_ANGLE,
+            32767,#32767,max value
+            32768,#32768,min value
+            65535#65535,min value
+        ]
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET0, data=value)
+                data = value
+                read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET0, register_count=1)
+                if index == 0:
+                    assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET0}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                elif index in (1,2,3):
+                    assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET0}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                elif index == 4:
+                     assert read_response.registers[0] == MAX_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET0}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                else:
+                    assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET0}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                logger.info(f"从寄存器{ROH_FINGER_ANGLE_TARGET0}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_ANGLE_TARGET0}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_ANGLE_TARGET0}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET0, data=FINGER_ANGLE_TARGET0)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET0, data=FINGER_ANGLE_TARGET0)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_angle_target1(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger angle target1')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET1, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE_TARGET1}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET1}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_ANGLE_TARGET1}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET1}>失败,发生异常')
+    def test_read_finger_angle_target1(self):
+        self.print_test_info(status=self.TEST_START,info='read finger angle target1')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET1, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE_TARGET1}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET1}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_ANGLE_TARGET1}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET1}>失败,发生异常')
             
-    # def test_write_finger_angle_target1(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger angle target1,The normal range is [0,65535]')
-    #     MIN_ANGLE = self.get_min_angle(addr=ROH_FINGER_ANGLE_TARGET1)
-    #     MAX_ANGLE = self.get_max_angle(addr=ROH_FINGER_ANGLE_TARGET1)
-    #     NORMAL_ANGLE= int(MIN_ANGLE + (MAX_ANGLE - MIN_ANGLE)/2)
-    #     verify_sets = [
-    #         0, 
-    #         MIN_ANGLE,
-    #         NORMAL_ANGLE,
-    #         MAX_ANGLE,
-    #         32767,#32767,max value
-    #         32768,#32768,min value
-    #         65535#65535,min value
-    #     ]
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET1, data=value)
-    #             data = value
-    #             read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET1, register_count=1)
-    #             if index == 0:
-    #                 assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET1}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             elif index in (1,2,3):
-    #                 assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET1}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             elif index == 4 :
-    #                 assert read_response.registers[0] == MAX_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET1}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             else:
-    #                 assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET1}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             logger.info(f"从寄存器{ROH_FINGER_ANGLE_TARGET1}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_ANGLE_TARGET1}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_ANGLE_TARGET1}>失败,发生异常')
+    def test_write_finger_angle_target1(self):
+        self.print_test_info(status=self.TEST_START, info='write finger angle target1,The normal range is [0,65535]')
+        MIN_ANGLE = self.get_min_angle(addr=ROH_FINGER_ANGLE_TARGET1)
+        MAX_ANGLE = self.get_max_angle(addr=ROH_FINGER_ANGLE_TARGET1)
+        NORMAL_ANGLE= int(MIN_ANGLE + (MAX_ANGLE - MIN_ANGLE)/2)
+        verify_sets = [
+            0, 
+            MIN_ANGLE,
+            NORMAL_ANGLE,
+            MAX_ANGLE,
+            32767,#32767,max value
+            32768,#32768,min value
+            65535#65535,min value
+        ]
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET1, data=value)
+                data = value
+                read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET1, register_count=1)
+                if index == 0:
+                    assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET1}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                elif index in (1,2,3):
+                    assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET1}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                elif index == 4 :
+                    assert read_response.registers[0] == MAX_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET1}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                else:
+                    assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET1}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                logger.info(f"从寄存器{ROH_FINGER_ANGLE_TARGET1}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_ANGLE_TARGET1}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_ANGLE_TARGET1}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET1, data=FINGER_ANGLE_TARGET1)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET1, data=FINGER_ANGLE_TARGET1)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
             
-    # def test_read_finger_angle_target2(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger angle target2')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET2, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE_TARGET2}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET2}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_ANGLE_TARGET2}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET2}>失败,发生异常')
+    def test_read_finger_angle_target2(self):
+        self.print_test_info(status=self.TEST_START,info='read finger angle target2')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET2, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE_TARGET2}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET2}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_ANGLE_TARGET2}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET2}>失败,发生异常')
             
-    # def test_write_finger_angle_target2(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger angle target2,The normal range is [0,65535]')
-    #     MIN_ANGLE = self.get_min_angle(addr=ROH_FINGER_ANGLE_TARGET2)
-    #     MAX_ANGLE = self.get_max_angle(addr=ROH_FINGER_ANGLE_TARGET2)
-    #     NORMAL_ANGLE= int(MIN_ANGLE + (MAX_ANGLE - MIN_ANGLE)/2)
-    #     verify_sets = [
-    #         0, 
-    #         MIN_ANGLE,
-    #         NORMAL_ANGLE,
-    #         MAX_ANGLE,
-    #         32767,#32767,max value
-    #         32768,#32768,min value
-    #         65535#65535,min value
-    #     ]
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET2, data=value)
-    #             data = value
-    #             read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET2, register_count=1)
-    #             if index == 0:
-    #                 assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET2}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             elif index in (1,2,3):
-    #                 assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET2}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             elif index == 4:
-    #                 assert read_response.registers[0] == MAX_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET2}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             else:
-    #                 assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET2}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             logger.info(f"从寄存器{ROH_FINGER_ANGLE_TARGET2}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_ANGLE_TARGET2}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_ANGLE_TARGET2}>失败,发生异常')
+    def test_write_finger_angle_target2(self):
+        self.print_test_info(status=self.TEST_START, info='write finger angle target2,The normal range is [0,65535]')
+        MIN_ANGLE = self.get_min_angle(addr=ROH_FINGER_ANGLE_TARGET2)
+        MAX_ANGLE = self.get_max_angle(addr=ROH_FINGER_ANGLE_TARGET2)
+        NORMAL_ANGLE= int(MIN_ANGLE + (MAX_ANGLE - MIN_ANGLE)/2)
+        verify_sets = [
+            0, 
+            MIN_ANGLE,
+            NORMAL_ANGLE,
+            MAX_ANGLE,
+            32767,#32767,max value
+            32768,#32768,min value
+            65535#65535,min value
+        ]
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET2, data=value)
+                data = value
+                read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET2, register_count=1)
+                if index == 0:
+                    assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET2}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                elif index in (1,2,3):
+                    assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET2}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                elif index == 4:
+                    assert read_response.registers[0] == MAX_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET2}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                else:
+                    assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET2}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                logger.info(f"从寄存器{ROH_FINGER_ANGLE_TARGET2}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_ANGLE_TARGET2}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_ANGLE_TARGET2}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET2, data=FINGER_ANGLE_TARGET2)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET2, data=FINGER_ANGLE_TARGET2)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_angle_target3(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger angle target3')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET3, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE_TARGET3}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET3}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_ANGLE_TARGET3}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET3}>失败,发生异常')
+    def test_read_finger_angle_target3(self):
+        self.print_test_info(status=self.TEST_START,info='read finger angle target3')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET3, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE_TARGET3}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET3}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_ANGLE_TARGET3}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET3}>失败,发生异常')
             
-    # def test_write_finger_angle_target3(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger angle target3,The normal range is [0,65535]')
-    #     MIN_ANGLE = self.get_min_angle(addr=ROH_FINGER_ANGLE_TARGET3)
-    #     MAX_ANGLE = self.get_max_angle(addr=ROH_FINGER_ANGLE_TARGET3)
-    #     NORMAL_ANGLE= int(MIN_ANGLE + (MAX_ANGLE - MIN_ANGLE)/2)
-    #     verify_sets = [
-    #         0, 
-    #         MIN_ANGLE,
-    #         NORMAL_ANGLE,
-    #         MAX_ANGLE,
-    #         32767,#32767,max value
-    #         32768,#32768,min value
-    #         65535#65535,min value
-    #     ]
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET3, data=value)
-    #             data = value
-    #             read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET3, register_count=1)
-    #             if index == 0:
-    #                 assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET3}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             elif index in (1,2,3):
-    #                 assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET3}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             elif index == 4:
-    #                 assert read_response.registers[0] == MAX_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET3}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             else:
-    #                 assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET3}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             logger.info(f"从寄存器{ROH_FINGER_ANGLE_TARGET3}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_ANGLE_TARGET3}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_ANGLE_TARGET3}>失败,发生异常')
+    def test_write_finger_angle_target3(self):
+        self.print_test_info(status=self.TEST_START, info='write finger angle target3,The normal range is [0,65535]')
+        MIN_ANGLE = self.get_min_angle(addr=ROH_FINGER_ANGLE_TARGET3)
+        MAX_ANGLE = self.get_max_angle(addr=ROH_FINGER_ANGLE_TARGET3)
+        NORMAL_ANGLE= int(MIN_ANGLE + (MAX_ANGLE - MIN_ANGLE)/2)
+        verify_sets = [
+            0, 
+            MIN_ANGLE,
+            NORMAL_ANGLE,
+            MAX_ANGLE,
+            32767,#32767,max value
+            32768,#32768,min value
+            65535#65535,min value
+        ]
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET3, data=value)
+                data = value
+                read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET3, register_count=1)
+                if index == 0:
+                    assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET3}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                elif index in (1,2,3):
+                    assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET3}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                elif index == 4:
+                    assert read_response.registers[0] == MAX_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET3}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                else:
+                    assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET3}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                logger.info(f"从寄存器{ROH_FINGER_ANGLE_TARGET3}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_ANGLE_TARGET3}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_ANGLE_TARGET3}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET3, data=FINGER_ANGLE_TARGET3)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET3, data=FINGER_ANGLE_TARGET3)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_angle_target4(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger angle target4')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET4, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE_TARGET4}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET4}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_ANGLE_TARGET4}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET4}>失败,发生异常')
+    def test_read_finger_angle_target4(self):
+        self.print_test_info(status=self.TEST_START,info='read finger angle target4')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET4, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE_TARGET4}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET4}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_ANGLE_TARGET4}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET4}>失败,发生异常')
             
-    # def test_write_finger_angle_target4(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger angle target4,The normal range is [0,65535]')
-    #     MIN_ANGLE = self.get_min_angle(addr=ROH_FINGER_ANGLE_TARGET4)
-    #     MAX_ANGLE = self.get_max_angle(addr=ROH_FINGER_ANGLE_TARGET4)
-    #     NORMAL_ANGLE= int(MIN_ANGLE + (MAX_ANGLE - MIN_ANGLE)/2)
-    #     verify_sets = [
-    #         0, 
-    #         MIN_ANGLE,
-    #         NORMAL_ANGLE,
-    #         MAX_ANGLE,
-    #         32767,#32767,max value
-    #         32768,#32768,min value
-    #         65535#65535,min value
-    #     ]
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET4, data=value)
-    #             data = value
-    #             read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET4, register_count=1)
-    #             if index == 0:
-    #                 assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET4}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             elif index in (1,2,3):
-    #                 assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET4}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             elif index == 4:
-    #                 assert read_response.registers[0] == MAX_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET4}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             else:
-    #                 assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET4}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             logger.info(f"从寄存器{ROH_FINGER_ANGLE_TARGET4}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_ANGLE_TARGET4}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_ANGLE_TARGET4}>失败,发生异常')
+    def test_write_finger_angle_target4(self):
+        self.print_test_info(status=self.TEST_START, info='write finger angle target4,The normal range is [0,65535]')
+        MIN_ANGLE = self.get_min_angle(addr=ROH_FINGER_ANGLE_TARGET4)
+        MAX_ANGLE = self.get_max_angle(addr=ROH_FINGER_ANGLE_TARGET4)
+        NORMAL_ANGLE= int(MIN_ANGLE + (MAX_ANGLE - MIN_ANGLE)/2)
+        verify_sets = [
+            0, 
+            MIN_ANGLE,
+            NORMAL_ANGLE,
+            MAX_ANGLE,
+            32767,#32767,max value
+            32768,#32768,min value
+            65535#65535,min value
+        ]
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET4, data=value)
+                data = value
+                read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET4, register_count=1)
+                if index == 0:
+                    assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET4}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                elif index in (1,2,3):
+                    assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET4}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                elif index == 4:
+                    assert read_response.registers[0] == MAX_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET4}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                else:
+                    assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET4}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                logger.info(f"从寄存器{ROH_FINGER_ANGLE_TARGET4}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_ANGLE_TARGET4}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_ANGLE_TARGET4}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET4, data=FINGER_ANGLE_TARGET4)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET4, data=FINGER_ANGLE_TARGET4)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_angle_target5(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger angle target5')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET5, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE_TARGET5}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET5}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_ANGLE_TARGET5}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET5}>失败,发生异常')
+    def test_read_finger_angle_target5(self):
+        self.print_test_info(status=self.TEST_START,info='read finger angle target5')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET5, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE_TARGET5}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET5}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_ANGLE_TARGET5}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET5}>失败,发生异常')
             
-    # def test_write_finger_angle_target5(self):
-    #     self.print_test_info(status=self.TEST_START, info='write finger angle target5,The normal range is [0,65535]')
-    #     MIN_ANGLE = self.get_min_angle(addr=ROH_FINGER_ANGLE_TARGET5)
-    #     MAX_ANGLE = self.get_max_angle(addr=ROH_FINGER_ANGLE_TARGET5)
-    #     NORMAL_ANGLE= int(MIN_ANGLE + (MAX_ANGLE - MIN_ANGLE)/2)
-    #     verify_sets = [
-    #         0, 
-    #         MIN_ANGLE,
-    #         NORMAL_ANGLE,
-    #         MAX_ANGLE,
-    #         32767,#32767,max value
-    #         32768,#32768,min value
-    #         65535#65535,min value
-    #     ]
-    #     for index,value in enumerate(verify_sets):
-    #         try:
-    #             response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET5, data=value)
-    #             data = value
-    #             read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET5, register_count=1)
-    #             if index == 0:
-    #                 assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             elif index in (1,2,3):
-    #                 assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             elif index == 4:
-    #                 assert read_response.registers[0] == MAX_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             else:
-    #                 assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-    #             logger.info(f"从寄存器{ROH_FINGER_ANGLE_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
-    #         except Exception as e:
-    #                 logger.error(f"写寄存器<{ROH_FINGER_ANGLE_TARGET5}>失败,发生异常: {e}")
-    #                 pytest.fail(f'写寄存器<{ROH_FINGER_ANGLE_TARGET5}>失败,发生异常')
+    def test_write_finger_angle_target5(self):
+        self.print_test_info(status=self.TEST_START, info='write finger angle target5,The normal range is [0,65535]')
+        MIN_ANGLE = self.get_min_angle(addr=ROH_FINGER_ANGLE_TARGET5)
+        MAX_ANGLE = self.get_max_angle(addr=ROH_FINGER_ANGLE_TARGET5)
+        NORMAL_ANGLE= int(MIN_ANGLE + (MAX_ANGLE - MIN_ANGLE)/2)
+        verify_sets = [
+            0, 
+            MIN_ANGLE,
+            NORMAL_ANGLE,
+            MAX_ANGLE,
+            32767,#32767,max value
+            32768,#32768,min value
+            65535#65535,min value
+        ]
+        for index,value in enumerate(verify_sets):
+            try:
+                response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET5, data=value)
+                data = value
+                read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE_TARGET5, register_count=1)
+                if index == 0:
+                    assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                elif index in (1,2,3):
+                    assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                elif index == 4:
+                    assert read_response.registers[0] == MAX_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                else:
+                    assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                logger.info(f"从寄存器{ROH_FINGER_ANGLE_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
+            except Exception as e:
+                    logger.error(f"写寄存器<{ROH_FINGER_ANGLE_TARGET5}>失败,发生异常: {e}")
+                    pytest.fail(f'写寄存器<{ROH_FINGER_ANGLE_TARGET5}>失败,发生异常')
                     
-    #     # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET5, data=FINGER_ANGLE_TARGET5)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+        # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_ANGLE_TARGET5, data=FINGER_ANGLE_TARGET5)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
             
-    # def test_read_finger_angle0(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger angle0')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE0, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE0}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_ANGLE0}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_ANGLE0}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE0}>失败,发生异常')
+    def test_read_finger_angle0(self):
+        self.print_test_info(status=self.TEST_START,info='read finger angle0')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE0, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE0}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_ANGLE0}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_ANGLE0}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE0}>失败,发生异常')
             
-    # def test_read_finger_angle1(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger angle1')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE1, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE1}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_ANGLE1}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_ANGLE1}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE1}>失败,发生异常')
+    def test_read_finger_angle1(self):
+        self.print_test_info(status=self.TEST_START,info='read finger angle1')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE1, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE1}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_ANGLE1}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_ANGLE1}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE1}>失败,发生异常')
             
-    # def test_read_finger_angle2(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger angle2')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE2, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE2}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_ANGLE2}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_ANGLE2}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE2}>失败,发生异常')
+    def test_read_finger_angle2(self):
+        self.print_test_info(status=self.TEST_START,info='read finger angle2')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE2, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE2}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_ANGLE2}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_ANGLE2}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE2}>失败,发生异常')
             
-    # def test_read_finger_angle3(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger angle3')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE3, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE3}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_ANGLE3}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_ANGLE3}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE3}>失败,发生异常')
+    def test_read_finger_angle3(self):
+        self.print_test_info(status=self.TEST_START,info='read finger angle3')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE3, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE3}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_ANGLE3}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_ANGLE3}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE3}>失败,发生异常')
             
-    # def test_read_finger_angle4(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger angle4')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE4, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE4}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_ANGLE4}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_ANGLE4}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE4}>失败,发生异常')
+    def test_read_finger_angle4(self):
+        self.print_test_info(status=self.TEST_START,info='read finger angle4')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE4, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE4}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_ANGLE4}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_ANGLE4}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE4}>失败,发生异常')
             
-    # def test_read_finger_angle5(self):
-    #     self.print_test_info(status=self.TEST_START,info='read finger angle5')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE5, register_count=1)
-    #         assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE5}>失败'
-    #         logger.info(f'读取寄存器<{ROH_FINGER_ANGLE5}>成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器<{ROH_FINGER_ANGLE5}>失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE5}>失败,发生异常')
+    def test_read_finger_angle5(self):
+        self.print_test_info(status=self.TEST_START,info='read finger angle5')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_ANGLE5, register_count=1)
+            assert response is not None,f'读取寄存器<{ROH_FINGER_ANGLE5}>失败'
+            logger.info(f'读取寄存器<{ROH_FINGER_ANGLE5}>成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器<{ROH_FINGER_ANGLE5}>失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE5}>失败,发生异常')
       
-    # # @pytest.mark.skip('暂时跳过多个寄存器的读操作')    
-    # def test_read_multiple_holding_registers(self):
-    #     self.print_test_info(status=self.TEST_START,info='read multiple registers')
-    #     try:
-    #         response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT0, register_count=6)
-    #         assert response is not None,f'读取寄存器起始地址<{ROH_FINGER_CURRENT_LIMIT0}>连续6个寄存器的值失败'
-    #         logger.info(f'读取寄存器起始地址<{ROH_FINGER_CURRENT_LIMIT0}>连续6个寄存器的值成功,读取的值为:{response.registers[0]}')
-    #     except Exception as e:
-    #         logger.error(f"读取寄存器起始地址<{ROH_FINGER_CURRENT_LIMIT0}>连续6个寄存器的值失败,发生异常: {e}")
-    #         pytest.fail(f'读取寄存器起始地址<{ROH_FINGER_CURRENT_LIMIT0}>连续6个寄存器的值失败,发生异常')
+    # @pytest.mark.skip('暂时跳过多个寄存器的读操作')    
+    def test_read_multiple_holding_registers(self):
+        self.print_test_info(status=self.TEST_START,info='read multiple registers')
+        try:
+            response = read_registers(bus=self.bus, start_address=ROH_FINGER_CURRENT_LIMIT0, register_count=6)
+            assert response is not None,f'读取寄存器起始地址<{ROH_FINGER_CURRENT_LIMIT0}>连续6个寄存器的值失败'
+            logger.info(f'读取寄存器起始地址<{ROH_FINGER_CURRENT_LIMIT0}>连续6个寄存器的值成功,读取的值为:{response.registers[0]}')
+        except Exception as e:
+            logger.error(f"读取寄存器起始地址<{ROH_FINGER_CURRENT_LIMIT0}>连续6个寄存器的值失败,发生异常: {e}")
+            pytest.fail(f'读取寄存器起始地址<{ROH_FINGER_CURRENT_LIMIT0}>连续6个寄存器的值失败,发生异常')
             
-    # # @pytest.mark.skip('暂时跳过多个寄存器的写操作')
-    # def test_write_multiple_holding_registers(self): 
-    #     self.print_test_info(status=self.TEST_START,info='write multiple registers')
-    #     verify_sets = [600,600,# 600
-    #                    600,600,# 600
-    #                    600,600# 600
-    #     ]
-    #     try:
-    #         response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT0, data=verify_sets)
-    #         assert response,f'写寄存器起始地址<{ROH_FINGER_CURRENT_LIMIT0}>,连续6个寄存器失败'
-    #         logger.info(f'写寄存器起始地址<{ROH_FINGER_CURRENT_LIMIT0}>,连续6个寄存器成功')
-    #     except Exception as e:
-    #         logger.error(f"写寄存器起始地址<{ROH_FINGER_CURRENT_LIMIT0}>,连续6个寄存器失败,发生异常: {e}")
-    #         pytest.fail(f'写寄存器起始地址<{ROH_FINGER_CURRENT_LIMIT0}>,连续6个寄存器失败,发生异常')
+    # @pytest.mark.skip('暂时跳过多个寄存器的写操作')
+    def test_write_multiple_holding_registers(self): 
+        self.print_test_info(status=self.TEST_START,info='write multiple registers')
+        verify_sets = [600,600,# 600
+                       600,600,# 600
+                       600,600# 600
+        ]
+        try:
+            response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT0, data=verify_sets)
+            assert response,f'写寄存器起始地址<{ROH_FINGER_CURRENT_LIMIT0}>,连续6个寄存器失败'
+            logger.info(f'写寄存器起始地址<{ROH_FINGER_CURRENT_LIMIT0}>,连续6个寄存器成功')
+        except Exception as e:
+            logger.error(f"写寄存器起始地址<{ROH_FINGER_CURRENT_LIMIT0}>,连续6个寄存器失败,发生异常: {e}")
+            pytest.fail(f'写寄存器起始地址<{ROH_FINGER_CURRENT_LIMIT0}>,连续6个寄存器失败,发生异常')
             
-    #      # 恢复默认值
-    #     logger.info('恢复默认值')
-    #     try:
-    #         default_sets = [1200,1200,# 1200
-    #                         1200,1200,# 1200
-    #                         1200,1200 # 1200
-    #     ]
-    #         write_response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT0, data=default_sets)
-    #         assert write_response, f"恢复默认值失败\n"
-    #         logger.info("恢复默认值成功\n")
-    #     except Exception as e:
-    #         logger.error(f"恢复默认值发生了异常: {e}")
+         # 恢复默认值
+        logger.info('恢复默认值')
+        try:
+            default_sets = [1200,1200,# 1200
+                            1200,1200,# 1200
+                            1200,1200 # 1200
+        ]
+            write_response = write_registers(self.bus, start_address=ROH_FINGER_CURRENT_LIMIT0, data=default_sets)
+            assert write_response, f"恢复默认值失败\n"
+            logger.info("恢复默认值成功\n")
+        except Exception as e:
+            logger.error(f"恢复默认值发生了异常: {e}")
