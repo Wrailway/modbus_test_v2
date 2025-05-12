@@ -418,24 +418,35 @@ class TestModbusProtocol:
             logger.info(f'等待设备重启中...{attempt_count}')
             time.sleep(delay_time)
             self.bus = setup_modbus()
-            # if(attempt_count % 3 == 0):
             if self.bus is None:
                 attempt_count += 1
                 continue
+            # if(attempt_count % 5 == 0):
             response = read_registers(bus=self.bus,start_address=ROH_NODE_ID,register_count=1,node_id=target_node_id)
             if(self.isNotNone(response=response)):
                 logger.info(f'wait_device_reboot-->check = {response.registers[0]}')
                 logger.info(f'设备已启动')
                 break
             attempt_count += 1
+        # attempt_count = 0
+        # while attempt_count < max_attempts:
+        #     logger.info(f'等待设备重启中...{attempt_count}')
+        #     time.sleep(delay_time)
+        #     self.bus = setup_modbus()
+        #     if(attempt_count % 5 == 0  and self.isNotNone(self.bus)):
+        #         response = read_registers(bus=self.bus,start_address=ROH_NODE_ID,register_count=1,node_id=target_node_id)
+        #         if(self.isNotNone(response=response)):
+        #             logger.info(f'设备已启动')
+        #             break
+        #     attempt_count += 1
             
-    @pytest.mark.skip('skip write node id,some bug need to fix')
+    # @pytest.mark.skip('skip write node id,some bug need to fix')
     def test_write_nodeID_version(self):
         self.print_test_info(status=self.TEST_START,info='write node id,The normal range is [2, 247]')
         verify_sets = [
             3
         ]
-        # default_node_id = 2 # 默认设备ID为2
+        default_node_id = 2 # 默认设备ID为2
         for index,value in enumerate(verify_sets):
             try:
                 # if index == 0:
@@ -444,24 +455,25 @@ class TestModbusProtocol:
                     # current_node_id = verify_sets[index-1]
                 data = value
                 logger.info(f'当前的node id = {current_node_id}，要写入的 node id ={data}')
-                response = write_registers(self.bus, start_address=ROH_NODE_ID, data=value,node_id=current_node_id)
-                assert response,f'写寄存器{ROH_NODE_ID}失败1111\n'
+                write_response1 = write_registers(self.bus, start_address=ROH_NODE_ID, data=value,node_id=current_node_id)
+                assert write_response1,f'写寄存器{ROH_NODE_ID}失败\n'
                 
                 self.wait_device_reboot(max_attempts=60,delay_time=1,target_node_id=data)
-                read_response = read_registers(bus=self.bus,start_address=ROH_NODE_ID, register_count=1)
-                assert read_response.registers[0] == data, f"从寄存器{ROH_NODE_ID}读出的值{response.registers[0]}与写入的值{data}不匹配"
-                logger.info(f"从寄存器{ROH_NODE_ID}读出的值{response.registers[0]}与写入的值{data}匹配成功\n")
+                read_response1 = read_registers(bus=self.bus,start_address=ROH_NODE_ID, register_count=1,node_id=value)
+                assert read_response1.registers[0] == data, f"从寄存器{ROH_NODE_ID}读出的值{read_response1.registers[0]}与写入的值{data}不匹配"
+                logger.info(f"从寄存器{ROH_NODE_ID}读出的值{read_response1.registers[0]}与写入的值{data}匹配成功\n")
             except Exception as e:
                 logger.error(f"写寄存器<{ROH_NODE_ID}>失败,发生异常: {e}")
                 pytest.fail(f'写寄存器<{ROH_NODE_ID}>失败,发生异常')
                 
         #恢复默认值
         try:
-            write_response = write_registers(self.bus,start_address=ROH_NODE_ID, data=NODE_ID,node_id=3)
-            self.wait_device_reboot(max_attempts=60,delay_time=1,target_node_id=NODE_ID)
-            assert write_response, f"恢复默认值失败\n"
-            read_response = read_registers(bus=self.bus,start_address=ROH_NODE_ID, register_count=1)
-            assert response.registers[0] == NODE_ID, f"从寄存器{ROH_NODE_ID}读出的值{response.registers[0]}与写入的值{data}不匹配"
+            logger.info("开始恢复默认值\n")
+            write_response2 = write_registers(self.bus, start_address=ROH_NODE_ID, data=NODE_ID,node_id=3)
+            self.wait_device_reboot(max_attempts=60,delay_time=1)
+            assert write_response2, f"恢复默认值失败\n"
+            read_response2 = read_registers(bus=self.bus,start_address=ROH_NODE_ID, register_count=1,node_id=NODE_ID)
+            assert read_response2.registers[0] == NODE_ID, f"从寄存器{ROH_NODE_ID}读出的值{read_response2.registers[0]}与写入的值{data}不匹配"
             logger.info("恢复默认值成功\n")
         except Exception as e:
             logger.error(f"恢复默认值发生了异常: {e}")
