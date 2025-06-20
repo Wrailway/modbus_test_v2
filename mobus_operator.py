@@ -35,7 +35,7 @@ FRAMER =FramerType.RTU
 READ_REGISTER = 0b00
 WRITE_REGISTER = 0b01
 
-WAIT_TIME = 2 # 延迟打印，方便查看
+WAIT_TIME = 0.1 # 延迟打印，方便查看
 ROH_SUB_EXCEPTION         = (1006) # R
 # ROH 灵巧手错误代码
 EC01_ILLEGAL_FUNCTION = 0X1  # 无效的功能码
@@ -175,15 +175,13 @@ def get_version(response):
             return "无法识别的响应类型"
     except Exception as e:
         return f"获取版本号时出现错误：{e}"
-
-
+            
 if __name__ == "__main__":
     # 初始化 modbus 总线
     bus = setup_modbus()
 
     if bus:
-       response = read_registers(bus=bus,start_address=1005,register_count=1,node_id=3)
+       response = read_registers(bus=bus,start_address=1140,register_count=1,node_id=2)
        if not response.isError():
           logger.info(f'f={response.registers[0]}')
-          write_registers(bus=bus, start_address=1005, data=2,node_id =3)
-        
+          write_registers(bus=bus, start_address=1140, data=0,node_id =2)

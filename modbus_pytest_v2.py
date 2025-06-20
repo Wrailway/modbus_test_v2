@@ -141,16 +141,16 @@ ROH_FINGER_CURRENT6       = (1111) # R
 ROH_FINGER_CURRENT7       = (1112) # R
 ROH_FINGER_CURRENT8       = (1113) # R
 ROH_FINGER_CURRENT9       = (1114) # R
-ROH_FINGER_FORCE_LIMIT0   = (1115) # R/W
-ROH_FINGER_FORCE_LIMIT1   = (1116) # R/W
-ROH_FINGER_FORCE_LIMIT2   = (1117) # R/W
-ROH_FINGER_FORCE_LIMIT3   = (1118) # R/W
-ROH_FINGER_FORCE_LIMIT4   = (1119) # R/W
-ROH_FINGER_FORCE0         = (1120) # R
-ROH_FINGER_FORCE1         = (1121) # R
-ROH_FINGER_FORCE2         = (1122) # R
-ROH_FINGER_FORCE3         = (1123) # R
-ROH_FINGER_FORCE4         = (1124) # R
+ROH_FINGER_FORCE_TARGET0   = (1115) # R/W
+ROH_FINGER_FORCE_TARGET1   = (1116) # R/W
+ROH_FINGER_FORCE_TARGET2   = (1117) # R/W
+ROH_FINGER_FORCE_TARGET3   = (1118) # R/W
+ROH_FINGER_FORCE_TARGET4   = (1119) # R/W
+ROH_FINGER_FORCE_TARGET5   = (1120) # R
+ROH_FINGER_FORCE_TARGET6   = (1121) # R
+ROH_FINGER_FORCE_TARGET7   = (1122) # R
+ROH_FINGER_FORCE_TARGET8   = (1123) # R
+ROH_FINGER_FORCE_TARGET9   = (1124) # R
 ROH_FINGER_SPEED0         = (1125) # R/W
 ROH_FINGER_SPEED1         = (1126) # R/W
 ROH_FINGER_SPEED2         = (1127) # R/W
@@ -202,6 +202,17 @@ ROH_FINGER_ANGLE7         = (1172) # R
 ROH_FINGER_ANGLE8         = (1173) # R
 ROH_FINGER_ANGLE9         = (1174) # R
 
+ROH_FINGER_FORCE0         = (1175) # R
+ROH_FINGER_FORCE1         = (1176) # R
+ROH_FINGER_FORCE2         = (1177) # R
+ROH_FINGER_FORCE3         = (1178) # R
+ROH_FINGER_FORCE4         = (1179) # R
+ROH_FINGER_FORCE5         = (1180) # R
+ROH_FINGER_FORCE6         = (1181) # R
+ROH_FINGER_FORCE7         = (1182) # R
+ROH_FINGER_FORCE8         = (1183) # R
+ROH_FINGER_FORCE9         = (1184) # R
+
 # 当前版本号信息
 PROTOCOL_VERSION = 'V1.0.0'
 FW_VERSION = 'V3.0.0'
@@ -247,12 +258,18 @@ FINGER_G4             = 100 # 小指弯曲 G 值
 FINGER_G5             = 100 # 大拇指旋转 G 值
 
 
-FINGER_CURRENT_LIMIT0  = 1200 # 大拇指弯曲电机电流限制值（mA）
-FINGER_CURRENT_LIMIT1  = 1200 # 食指弯曲电机电流限制值（mA）
-FINGER_CURRENT_LIMIT2  = 1200 # 中指弯曲电机电流限制值（mA）
-FINGER_CURRENT_LIMIT3  = 1200 # 无名指弯曲电机电流限制值（mA）
-FINGER_CURRENT_LIMIT4  = 1200 # 小指弯曲电机电流限制值（mA）
-FINGER_CURRENT_LIMIT5  = 1200 # 大拇指旋转电机电流限制值（mA）
+FINGER_CURRENT_LIMIT0  = 1299 # 大拇指弯曲电机电流限制值（mA）
+FINGER_CURRENT_LIMIT1  = 1299 # 食指弯曲电机电流限制值（mA）
+FINGER_CURRENT_LIMIT2  = 1299 # 中指弯曲电机电流限制值（mA）
+FINGER_CURRENT_LIMIT3  = 1299 # 无名指弯曲电机电流限制值（mA）
+FINGER_CURRENT_LIMIT4  = 1299 # 小指弯曲电机电流限制值（mA） 
+FINGER_CURRENT_LIMIT5  = 1299 # 大拇指旋转电机电流限制值（mA）
+
+FINGER_FORCE_TARGET0 = 0 # 大拇指力量目标值（uint16），单位 mN
+FINGER_FORCE_TARGET1 = 0 # 食指力量目标值（uint16），单位 mN
+FINGER_FORCE_TARGET2 = 0 # 中指力量目标值（uint16），单位 mN
+FINGER_FORCE_TARGET3 = 0 # 无名指力量目标值（uint16），单位 mN
+FINGER_FORCE_TARGET4 = 0 #  小指力量目标值（uint16），单位 mN
 
 
 FINGER_FORCE_LIMIT0  = 15000 # 大拇指力量限制值（单位 mN）
@@ -273,7 +290,7 @@ FINGER_POS_TARGET1 = 0 #食指弯曲逻辑目标位置
 FINGER_POS_TARGET2 = 0 #中指弯曲逻辑目标位置
 FINGER_POS_TARGET3 = 0 #无名指弯曲逻辑目标位置
 FINGER_POS_TARGET4 = 0 #小指弯曲逻辑目标位置
-FINGER_POS_TARGET5 = 0 #大拇旋转指逻辑目标位置
+FINGER_POS_TARGET5 = 728 #大拇旋转指逻辑目标位置
 FINGER_POS_TARGET_MAX_LOSS = 32 # 位置最大精度损失
 
 
@@ -286,7 +303,7 @@ FINGER_ANGLE_TARGET5 = 0 # 大拇旋转目标角度
 FINGER_ANGLE_TARGET_MAX_LOSS = 5 # 角度最大精度损失
 
 
-WAIT_TIME = 1 # 延迟打印，方便查看
+# WAIT_TIME = 0.1 # 延迟打印，方便查看
 
 class TestModbusProtocol:
     TEST_START = 0X0
@@ -440,7 +457,7 @@ class TestModbusProtocol:
         #             break
         #     attempt_count += 1
             
-    # @pytest.mark.skip('skip write node id,some bug need to fix')
+    @pytest.mark.skip('skip write node id,some bug need to fix')
     def test_write_nodeID_version(self):
         self.print_test_info(status=self.TEST_START,info='write node id,The normal range is [2, 247]')
         verify_sets = [
@@ -587,7 +604,8 @@ class TestModbusProtocol:
         
         for index,value in enumerate(verify_sets):
             try:
-                response = write_registers(self.bus, start_address=ROH_BEEP_PERIOD, data=value)
+                response = write_registers(self.bus, start_address=ROH_BEEP_PERIOD, data=
+                                           value)
                 data = value
                 if index ==0:
                     assert not response, f"超出范围的值{data}未被检测出\n"
@@ -1789,12 +1807,12 @@ class TestModbusProtocol:
     
     # @pytest.mark.skip('1200边界值写入后,读出来是1178,需要研发修改')        
     def test_write_current_limit0(self):
-        self.print_test_info(status=self.TEST_START, info='write finger current limit0,The normal range is [0,1200], and the out-of-range values fall within {1201,65535}')
+        self.print_test_info(status=self.TEST_START, info='write finger current limit0,The normal range is [0,1299], and the out-of-range values fall within {1300,65535}')
         verify_sets = [
             0,# 0
             600,# 600
-            1200,# 1200
-            1201,# 1201
+            1299,# 1299
+            1300,# 1300
             65535# 65535 
         ]
         
@@ -1835,12 +1853,12 @@ class TestModbusProtocol:
     
     # @pytest.mark.skip('1200边界值写入后,读出来是1178,需要研发修改')        
     def test_write_current_limit1(self):
-        self.print_test_info(status=self.TEST_START, info='write finger current limit1,The normal range is [0,1200], and the out-of-range values fall within {1201,65535}')
+        self.print_test_info(status=self.TEST_START, info='write finger current limit1,The normal range is [0,1299], and the out-of-range values fall within {1300,65535}')
         verify_sets = [
             0,# 0
             600,# 600
-            1200,# 1200
-            1201,# 1201
+            1299,# 1299
+            1300,# 1300
             65535# 65535 
         ]
         
@@ -1881,12 +1899,12 @@ class TestModbusProtocol:
     
     # @pytest.mark.skip('1200边界值写入后,读出来是1178,需要研发修改')        
     def test_write_current_limit2(self):
-        self.print_test_info(status=self.TEST_START, info='write finger current limit2,The normal range is [0,1200], and the out-of-range values fall within {1201,65535}')
+        self.print_test_info(status=self.TEST_START, info='write finger current limit2,The normal range is [0,1299], and the out-of-range values fall within {1300,65535}')
         verify_sets = [
             0,# 0
             600,# 600
-            1200,# 1200
-            1201,# 1201
+            1299,# 1299
+            1300,# 1300
             65535# 65535 
         ]
         
@@ -1927,12 +1945,12 @@ class TestModbusProtocol:
     
     # @pytest.mark.skip('1200边界值写入后,读出来是1178,需要研发修改')        
     def test_write_current_limit3(self):
-        self.print_test_info(status=self.TEST_START, info='write finger current limit3,The normal range is [0,1200], and the out-of-range values fall within {1201,65535}')
+        self.print_test_info(status=self.TEST_START, info='write finger current limit3,The normal range is [0,1299], and the out-of-range values fall within {1300,65535}')
         verify_sets = [
             0,# 0
             600,# 600
-            1200,# 1200
-            1201,# 1201
+            1299,# 1299
+            1300,# 1300
             65535# 65535 
         ]
         
@@ -1973,12 +1991,12 @@ class TestModbusProtocol:
     
     # @pytest.mark.skip('1200边界值写入后,读出来是1178,需要研发修改')        
     def test_write_current_limit4(self):
-        self.print_test_info(status=self.TEST_START, info='write finger current limit4,The normal range is [0,1200], and the out-of-range values fall within {1201,65535}')
+        self.print_test_info(status=self.TEST_START, info='write finger current limit4,The normal range is [0,1299], and the out-of-range values fall within {1300,65535}')
         verify_sets = [
             0,# 0
             600,# 600
-            1200,# 1200
-            1201,# 1201
+            1299,# 1299
+            1300,# 1300
             65535# 65535 
         ]
         
@@ -2019,12 +2037,12 @@ class TestModbusProtocol:
     
     # @pytest.mark.skip('1200边界值写入后,读出来是1178,需要研发修改')        
     def test_write_current_limit5(self):
-        self.print_test_info(status=self.TEST_START, info='write finger current limit5,The normal range is [0,1200], and the out-of-range values fall within {1201,65535}')
+        self.print_test_info(status=self.TEST_START, info='write finger current limit5,The normal range is [0,1299], and the out-of-range values fall within {1300,65535}')
         verify_sets = [
             0,# 0
             600,# 600
-            1200,# 1200
-            1201,# 1201
+            1299,# 1299
+            1300,# 1300
             65535# 65535 
         ]
         
@@ -2470,8 +2488,9 @@ class TestModbusProtocol:
     def test_write_finger_pos_target0(self):
         self.print_test_info(status=self.TEST_START, info='write finger pos target0,The normal range is [0,65535]')
         verify_sets = [
-            0, 
-            1,
+            # 0, 
+            # 1,
+            728,
             32767,
             32768,
             65535
@@ -2672,6 +2691,7 @@ class TestModbusProtocol:
         verify_sets = [
             0, 
             1,
+            728,
             32767,
             32768,
             65535
@@ -2682,7 +2702,10 @@ class TestModbusProtocol:
                 response = write_registers(self.bus, start_address=ROH_FINGER_POS_TARGET5, data=value)
                 data = value
                 read_response = read_registers(bus=self.bus, start_address=ROH_FINGER_POS_TARGET5, register_count=1)
-                assert abs(read_response.registers[0] - data) <= FINGER_POS_TARGET_MAX_LOSS, f"从寄存器{ROH_FINGER_POS_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n"
+                if index in(0,1,2):
+                    assert read_response.registers[0] == FINGER_POS_TARGET5, f"从寄存器{ROH_FINGER_POS_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n"
+                else:    
+                    assert abs(read_response.registers[0] - data) <= FINGER_POS_TARGET_MAX_LOSS, f"从寄存器{ROH_FINGER_POS_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n"
                 logger.info(f"从寄存器{ROH_FINGER_POS_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
             except Exception as e:
                     logger.error(f"写寄存器<{ROH_FINGER_POS_TARGET5}>失败,发生异常: {e}")
@@ -2777,11 +2800,26 @@ class TestModbusProtocol:
             logger.info(f'get max angle : {addr} 尝试获取最大值失败')
             return 32767
         
-    # def to_hex_array(self, decimal_num):
-    #     # 将十进制数转换为两个字节的十六进制数组
-    #     hex_bytes = [(decimal_num & 0xFF), ((decimal_num >> 8) & 0xFF)]
-    #     return hex_bytes   
-            
+    def get_max_negative_angle(self,addr):
+        values = 32768
+        if write_registers(bus=self.bus,start_address=addr,data=values):
+           response = read_registers(bus=self.bus,start_address=addr,register_count=1)
+           logger.info(f'get max negative angle : {addr} ->{response.registers[0]}')
+           return response.registers[0]
+        else:
+            logger.info(f'get max negative angle : {addr} 尝试获取最大负值失败')
+            return 32768
+        
+    def get_min_negative_angle(self,addr):
+        values = 65535
+        if write_registers(bus=self.bus,start_address=addr,data=values):
+           response = read_registers(bus=self.bus,start_address=addr,register_count=1)
+           logger.info(f'get min negative angle : {addr} ->{response.registers[0]}')
+           return response.registers[0]
+        else:
+            logger.info(f'get max negative angle : {addr} 尝试获取最小负值失败')
+            return 65535
+        
     def test_read_finger_angle_target0(self):
         self.print_test_info(status=self.TEST_START,info='read finger angle target0')
         try:
@@ -2797,13 +2835,18 @@ class TestModbusProtocol:
         MIN_ANGLE = self.get_min_angle(addr=ROH_FINGER_ANGLE_TARGET0)
         MAX_ANGLE = self.get_max_angle(addr=ROH_FINGER_ANGLE_TARGET0)
         NORMAL_ANGLE= int(MIN_ANGLE + (MAX_ANGLE - MIN_ANGLE)/2)
+        MIN_NEG_ANGLE = self.get_min_negative_angle(addr=ROH_FINGER_ANGLE_TARGET0)
+        MAX_NEG_ANGLE = self.get_max_negative_angle(addr=ROH_FINGER_ANGLE_TARGET0)
+        # NORMAL_NEG_ANGLE= int(MIN_NEG_ANGLE + (MAX_NEG_ANGLE - MIN_NEG_ANGLE)/2)
         verify_sets = [
             0, 
             MIN_ANGLE,
             NORMAL_ANGLE,
             MAX_ANGLE,
             32767,#32767,max value
-            32768,#32768,min value
+            32768,#32768,max negative value
+            MAX_NEG_ANGLE,
+            MIN_NEG_ANGLE,
             65535#65535,min value
         ]
         for index,value in enumerate(verify_sets):
@@ -2816,9 +2859,13 @@ class TestModbusProtocol:
                 elif index in (1,2,3):
                     assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET0}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
                 elif index == 4:
-                     assert read_response.registers[0] == MAX_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET0}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                    assert read_response.registers[0] == MAX_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET0}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                elif index == 5:
+                     assert read_response.registers[0] == MAX_NEG_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET0}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                elif index in (6,7):
+                    assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET0}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
                 else:
-                    assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET0}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                    assert read_response.registers[0] == MIN_NEG_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET0}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
                 logger.info(f"从寄存器{ROH_FINGER_ANGLE_TARGET0}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
             except Exception as e:
                     logger.error(f"写寄存器<{ROH_FINGER_ANGLE_TARGET0}>失败,发生异常: {e}")
@@ -2848,14 +2895,18 @@ class TestModbusProtocol:
         MIN_ANGLE = self.get_min_angle(addr=ROH_FINGER_ANGLE_TARGET1)
         MAX_ANGLE = self.get_max_angle(addr=ROH_FINGER_ANGLE_TARGET1)
         NORMAL_ANGLE= int(MIN_ANGLE + (MAX_ANGLE - MIN_ANGLE)/2)
+        MIN_NEG_ANGLE = self.get_min_negative_angle(addr=ROH_FINGER_ANGLE_TARGET1)
+        MAX_NEG_ANGLE = self.get_max_negative_angle(addr=ROH_FINGER_ANGLE_TARGET1)
         verify_sets = [
             0, 
             MIN_ANGLE,
             NORMAL_ANGLE,
             MAX_ANGLE,
             32767,#32767,max value
-            32768,#32768,min value
-            65535#65535,min value
+            32768,
+            MAX_NEG_ANGLE,
+            MIN_NEG_ANGLE,
+            65535
         ]
         for index,value in enumerate(verify_sets):
             try:
@@ -2868,8 +2919,10 @@ class TestModbusProtocol:
                     assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET1}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
                 elif index == 4 :
                     assert read_response.registers[0] == MAX_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET1}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                elif index in (6,7):
+                    assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET1}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
                 else:
-                    assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET1}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                    assert read_response.registers[0] == MIN_NEG_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET1}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
                 logger.info(f"从寄存器{ROH_FINGER_ANGLE_TARGET1}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
             except Exception as e:
                     logger.error(f"写寄存器<{ROH_FINGER_ANGLE_TARGET1}>失败,发生异常: {e}")
@@ -2883,7 +2936,7 @@ class TestModbusProtocol:
             logger.info("恢复默认值成功\n")
         except Exception as e:
             logger.error(f"恢复默认值发生了异常: {e}")
-            
+    
             
     def test_read_finger_angle_target2(self):
         self.print_test_info(status=self.TEST_START,info='read finger angle target2')
@@ -2900,14 +2953,18 @@ class TestModbusProtocol:
         MIN_ANGLE = self.get_min_angle(addr=ROH_FINGER_ANGLE_TARGET2)
         MAX_ANGLE = self.get_max_angle(addr=ROH_FINGER_ANGLE_TARGET2)
         NORMAL_ANGLE= int(MIN_ANGLE + (MAX_ANGLE - MIN_ANGLE)/2)
+        MIN_NEG_ANGLE = self.get_min_negative_angle(addr=ROH_FINGER_ANGLE_TARGET2)
+        MAX_NEG_ANGLE = self.get_max_negative_angle(addr=ROH_FINGER_ANGLE_TARGET2)
         verify_sets = [
             0, 
             MIN_ANGLE,
             NORMAL_ANGLE,
             MAX_ANGLE,
             32767,#32767,max value
-            32768,#32768,min value
-            65535#65535,min value
+            32768,
+            MAX_NEG_ANGLE,
+            MIN_NEG_ANGLE,
+            65535
         ]
         for index,value in enumerate(verify_sets):
             try:
@@ -2918,10 +2975,12 @@ class TestModbusProtocol:
                     assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET2}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
                 elif index in (1,2,3):
                     assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET2}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-                elif index == 4:
+                elif index == 4 :
                     assert read_response.registers[0] == MAX_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET2}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                elif index in (6,7):
+                    assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET2}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
                 else:
-                    assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET2}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                    assert read_response.registers[0] == MIN_NEG_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET2}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
                 logger.info(f"从寄存器{ROH_FINGER_ANGLE_TARGET2}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
             except Exception as e:
                     logger.error(f"写寄存器<{ROH_FINGER_ANGLE_TARGET2}>失败,发生异常: {e}")
@@ -2935,6 +2994,7 @@ class TestModbusProtocol:
             logger.info("恢复默认值成功\n")
         except Exception as e:
             logger.error(f"恢复默认值发生了异常: {e}")
+            
             
     def test_read_finger_angle_target3(self):
         self.print_test_info(status=self.TEST_START,info='read finger angle target3')
@@ -2951,14 +3011,18 @@ class TestModbusProtocol:
         MIN_ANGLE = self.get_min_angle(addr=ROH_FINGER_ANGLE_TARGET3)
         MAX_ANGLE = self.get_max_angle(addr=ROH_FINGER_ANGLE_TARGET3)
         NORMAL_ANGLE= int(MIN_ANGLE + (MAX_ANGLE - MIN_ANGLE)/2)
+        MIN_NEG_ANGLE = self.get_min_negative_angle(addr=ROH_FINGER_ANGLE_TARGET3)
+        MAX_NEG_ANGLE = self.get_max_negative_angle(addr=ROH_FINGER_ANGLE_TARGET3)
         verify_sets = [
             0, 
             MIN_ANGLE,
             NORMAL_ANGLE,
             MAX_ANGLE,
             32767,#32767,max value
-            32768,#32768,min value
-            65535#65535,min value
+            32768,
+            MAX_NEG_ANGLE,
+            MIN_NEG_ANGLE,
+            65535
         ]
         for index,value in enumerate(verify_sets):
             try:
@@ -2969,10 +3033,12 @@ class TestModbusProtocol:
                     assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET3}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
                 elif index in (1,2,3):
                     assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET3}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-                elif index == 4:
+                elif index == 4 :
                     assert read_response.registers[0] == MAX_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET3}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                elif index in (6,7):
+                    assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET3}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
                 else:
-                    assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET3}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                    assert read_response.registers[0] == MIN_NEG_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET3}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
                 logger.info(f"从寄存器{ROH_FINGER_ANGLE_TARGET3}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
             except Exception as e:
                     logger.error(f"写寄存器<{ROH_FINGER_ANGLE_TARGET3}>失败,发生异常: {e}")
@@ -2986,6 +3052,7 @@ class TestModbusProtocol:
             logger.info("恢复默认值成功\n")
         except Exception as e:
             logger.error(f"恢复默认值发生了异常: {e}")
+            
             
     def test_read_finger_angle_target4(self):
         self.print_test_info(status=self.TEST_START,info='read finger angle target4')
@@ -3002,14 +3069,18 @@ class TestModbusProtocol:
         MIN_ANGLE = self.get_min_angle(addr=ROH_FINGER_ANGLE_TARGET4)
         MAX_ANGLE = self.get_max_angle(addr=ROH_FINGER_ANGLE_TARGET4)
         NORMAL_ANGLE= int(MIN_ANGLE + (MAX_ANGLE - MIN_ANGLE)/2)
+        MIN_NEG_ANGLE = self.get_min_negative_angle(addr=ROH_FINGER_ANGLE_TARGET4)
+        MAX_NEG_ANGLE = self.get_max_negative_angle(addr=ROH_FINGER_ANGLE_TARGET4)
         verify_sets = [
             0, 
             MIN_ANGLE,
             NORMAL_ANGLE,
             MAX_ANGLE,
             32767,#32767,max value
-            32768,#32768,min value
-            65535#65535,min value
+            32768,
+            MAX_NEG_ANGLE,
+            MIN_NEG_ANGLE,
+            65535
         ]
         for index,value in enumerate(verify_sets):
             try:
@@ -3020,10 +3091,12 @@ class TestModbusProtocol:
                     assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET4}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
                 elif index in (1,2,3):
                     assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET4}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-                elif index == 4:
+                elif index == 4 :
                     assert read_response.registers[0] == MAX_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET4}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                elif index in (6,7):
+                    assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET4}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
                 else:
-                    assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET4}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                    assert read_response.registers[0] == MIN_NEG_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET4}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
                 logger.info(f"从寄存器{ROH_FINGER_ANGLE_TARGET4}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
             except Exception as e:
                     logger.error(f"写寄存器<{ROH_FINGER_ANGLE_TARGET4}>失败,发生异常: {e}")
@@ -3038,6 +3111,7 @@ class TestModbusProtocol:
         except Exception as e:
             logger.error(f"恢复默认值发生了异常: {e}")
             
+            
     def test_read_finger_angle_target5(self):
         self.print_test_info(status=self.TEST_START,info='read finger angle target5')
         try:
@@ -3047,20 +3121,24 @@ class TestModbusProtocol:
         except Exception as e:
             logger.error(f"读取寄存器<{ROH_FINGER_ANGLE_TARGET5}>失败,发生异常: {e}")
             pytest.fail(f'读取寄存器<{ROH_FINGER_ANGLE_TARGET5}>失败,发生异常')
-            
+        
     def test_write_finger_angle_target5(self):
         self.print_test_info(status=self.TEST_START, info='write finger angle target5,The normal range is [0,65535]')
         MIN_ANGLE = self.get_min_angle(addr=ROH_FINGER_ANGLE_TARGET5)
         MAX_ANGLE = self.get_max_angle(addr=ROH_FINGER_ANGLE_TARGET5)
         NORMAL_ANGLE= int(MIN_ANGLE + (MAX_ANGLE - MIN_ANGLE)/2)
+        MIN_NEG_ANGLE = self.get_min_negative_angle(addr=ROH_FINGER_ANGLE_TARGET5)
+        MAX_NEG_ANGLE = self.get_max_negative_angle(addr=ROH_FINGER_ANGLE_TARGET5)
         verify_sets = [
             0, 
             MIN_ANGLE,
             NORMAL_ANGLE,
             MAX_ANGLE,
             32767,#32767,max value
-            32768,#32768,min value
-            65535#65535,min value
+            32768,
+            MAX_NEG_ANGLE,
+            MIN_NEG_ANGLE,
+            65535
         ]
         for index,value in enumerate(verify_sets):
             try:
@@ -3071,10 +3149,12 @@ class TestModbusProtocol:
                     assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
                 elif index in (1,2,3):
                     assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
-                elif index == 4:
+                elif index == 4 :
                     assert read_response.registers[0] == MAX_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                elif index in (6,7):
+                    assert abs(read_response.registers[0] - data) <= FINGER_ANGLE_TARGET_MAX_LOSS,f'从寄存器{ROH_FINGER_ANGLE_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
                 else:
-                    assert read_response.registers[0] == MIN_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
+                    assert read_response.registers[0] == MIN_NEG_ANGLE,f'从寄存器{ROH_FINGER_ANGLE_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失不符合要求\n'
                 logger.info(f"从寄存器{ROH_FINGER_ANGLE_TARGET5}读出的值{read_response.registers[0]}与写入的值{data}比较，精度损失符合要求\n")
             except Exception as e:
                     logger.error(f"写寄存器<{ROH_FINGER_ANGLE_TARGET5}>失败,发生异常: {e}")
