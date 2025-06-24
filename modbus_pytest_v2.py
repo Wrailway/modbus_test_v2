@@ -2190,66 +2190,6 @@ class TestModbusProtocol:
             logger.error(f"读取寄存器<{ROH_FINGER_CURRENT5}>失败,发生异常: {e}")
             pytest.fail(f'读取寄存器<{ROH_FINGER_CURRENT5}>失败,发生异常')
     
-    @pytest.mark.skip('力传感器暂未添加，先跳过')
-    def test_read_finger_force_limit0(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-        self.print_test_info(status=self.TEST_START,info='read finger force limit0')
-        pass
-    
-    @pytest.mark.skip('力传感器暂未添加，先跳过')
-    def test_write_finger_force_limit0(self):
-        self.print_test_info(status=self.TEST_START,info='write finger force limit0')
-        pass
-    
-    @pytest.mark.skip('力传感器暂未添加，先跳过')
-    def test_read_finger_force_limit1(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-        self.print_test_info(status=self.TEST_START,info='read finger force limit1')
-        pass
-    
-    @pytest.mark.skip('力传感器暂未添加，先跳过')
-    def test_write_finger_force_limit1(self):
-        self.print_test_info(status=self.TEST_START,info='write finger force limit1')
-        pass
-    
-    @pytest.mark.skip('力传感器暂未添加，先跳过')
-    def test_read_finger_force_limit2(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-        self.print_test_info(status=self.TEST_START,info='read finger force limit2')
-        pass
-    
-    @pytest.mark.skip('力传感器暂未添加，先跳过')
-    def test_write_finger_force_limit2(self):
-        self.print_test_info(status=self.TEST_START,info='write finger force limit2')
-        pass
-    
-    @pytest.mark.skip('力传感器暂未添加，先跳过')
-    def test_read_finger_force_limit3(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-        self.print_test_info(status=self.TEST_START,info='read finger force limit3')
-        pass
-    
-    @pytest.mark.skip('力传感器暂未添加，先跳过')
-    def test_write_finger_force_limit3(self):
-        self.print_test_info(status=self.TEST_START,info='write finger force limit3')
-        pass
-    
-    @pytest.mark.skip('力传感器暂未添加，先跳过')
-    def test_read_finger_force_limit4(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-        self.print_test_info(status=self.TEST_START,info='read finger force limit4')
-        pass
-    
-    @pytest.mark.skip('力传感器暂未添加，先跳过')
-    def test_write_finger_force_limit4(self):
-        self.print_test_info(status=self.TEST_START,info='write finger force limit4')
-        pass
-    
-    @pytest.mark.skip('力传感器暂未添加，先跳过')
-    def test_read_finger_force_limit5(self):                                                                                                                                                                                                                                                                                                                                                                                                           
-        self.print_test_info(status=self.TEST_START,info='read finger force limit5')
-        pass
-    
-    @pytest.mark.skip('力传感器暂未添加，先跳过')
-    def test_write_finger_force_limit5(self):
-        self.print_test_info(status=self.TEST_START,info='write finger force limit5')
-        pass
-    
     def test_read_finger_force0(self):                                                                                                                                                                                                                                                                                                                                                                                                           
         self.print_test_info(status=self.TEST_START,info='read finger force0')
         try:
@@ -4190,7 +4130,7 @@ class TestModbusProtocol:
         try:
             response = read_registers(bus=self.bus, start_address=ROH_FINGER_FORCE_G0, register_count=1)
             assert response is not None,f'读取寄存器<{ROH_FINGER_FORCE_G0}>失败'
-            logger.info(f'读取寄存器<{ROH_FINGER_FORCE_G0}>成功,读取的值为:{response}')
+            logger.info(f'读取寄存器<{ROH_FINGER_FORCE_G0}>成功,读取的值为:{response.registers[0]}')
         except Exception as e:
             logger.error(f"读取寄存器<{ROH_FINGER_FORCE_G0}>失败,发生异常: {e}")
             pytest.fail(f'读取寄存器<{ROH_FINGER_FORCE_G0}>失败,发生异常')
@@ -4236,7 +4176,7 @@ class TestModbusProtocol:
         try:
             response = read_registers(bus=self.bus, start_address=ROH_FINGER_FORCE_G1, register_count=1)
             assert response is not None,f'读取寄存器<{ROH_FINGER_FORCE_G1}>失败'
-            logger.info(f'读取寄存器<{ROH_FINGER_FORCE_G1}>成功,读取的值为:{response}')
+            logger.info(f'读取寄存器<{ROH_FINGER_FORCE_G1}>成功,读取的值为:{response.registers[0]}')
         except Exception as e:
             logger.error(f"读取寄存器<{ROH_FINGER_FORCE_G1}>失败,发生异常: {e}")
             pytest.fail(f'读取寄存器<{ROH_FINGER_FORCE_G1}>失败,发生异常')
@@ -4282,7 +4222,7 @@ class TestModbusProtocol:
         try:
             response = read_registers(bus=self.bus, start_address=ROH_FINGER_FORCE_G2, register_count=1)
             assert response is not None,f'读取寄存器<{ROH_FINGER_FORCE_G2}>失败'
-            logger.info(f'读取寄存器<{ROH_FINGER_FORCE_G2}>成功,读取的值为:{response}')
+            logger.info(f'读取寄存器<{ROH_FINGER_FORCE_G2}>成功,读取的值为:{response.registers[0]}')
         except Exception as e:
             logger.error(f"读取寄存器<{ROH_FINGER_FORCE_G2}>失败,发生异常: {e}")
             pytest.fail(f'读取寄存器<{ROH_FINGER_FORCE_G2}>失败,发生异常')
@@ -4328,7 +4268,7 @@ class TestModbusProtocol:
         try:
             response = read_registers(bus=self.bus, start_address=ROH_FINGER_FORCE_G3, register_count=1)
             assert response is not None,f'读取寄存器<{ROH_FINGER_FORCE_G3}>失败'
-            logger.info(f'读取寄存器<{ROH_FINGER_FORCE_G3}>成功,读取的值为:{response}')
+            logger.info(f'读取寄存器<{ROH_FINGER_FORCE_G3}>成功,读取的值为:{response.registers[0]}')
         except Exception as e:
             logger.error(f"读取寄存器<{ROH_FINGER_FORCE_G3}>失败,发生异常: {e}")
             pytest.fail(f'读取寄存器<{ROH_FINGER_FORCE_G3}>失败,发生异常')
@@ -4374,7 +4314,7 @@ class TestModbusProtocol:
         try:
             response = read_registers(bus=self.bus, start_address=ROH_FINGER_FORCE_G4, register_count=1)
             assert response is not None,f'读取寄存器<{ROH_FINGER_FORCE_G4}>失败'
-            logger.info(f'读取寄存器<{ROH_FINGER_FORCE_G4}>成功,读取的值为:{response}')
+            logger.info(f'读取寄存器<{ROH_FINGER_FORCE_G4}>成功,读取的值为:{response.registers[0]}')
         except Exception as e:
             logger.error(f"读取寄存器<{ROH_FINGER_FORCE_G4}>失败,发生异常: {e}")
             pytest.fail(f'读取寄存器<{ROH_FINGER_FORCE_G4}>失败,发生异常')
@@ -4420,7 +4360,7 @@ class TestModbusProtocol:
     def test_read_finger_force_ex(self):
         self.print_test_info(status=self.TEST_START, info='read finger force ex[0~6]')
         try:
-            FORCE_VALUE_LENGTH = [17, 30, 30, 30, 16, 27]
+            FORCE_VALUE_LENGTH = [18, 30, 30, 30, 16, 28]
             NUM_FINGERS = 6
             FORCE_GROUP_SIZE = 100
             for i in range(NUM_FINGERS):

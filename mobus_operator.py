@@ -31,11 +31,8 @@ PORT = 'COM3'
 NODE_ID = 2
 BAUDRATE =115200
 FRAMER =FramerType.RTU
-# 定义指令类型常量
-READ_REGISTER = 0b00
-WRITE_REGISTER = 0b01
 
-WAIT_TIME = 0.1 # 延迟打印，方便查看
+WAIT_TIME = 1 # 延迟打印，方便查看
 ROH_SUB_EXCEPTION         = (1006) # R
 # ROH 灵巧手错误代码
 EC01_ILLEGAL_FUNCTION = 0X1  # 无效的功能码
@@ -181,7 +178,7 @@ if __name__ == "__main__":
     bus = setup_modbus()
 
     if bus:
-       response = read_registers(bus=bus,start_address=1140,register_count=1,node_id=2)
+       response = read_registers(bus=bus,start_address=1225,register_count=1,node_id=2)
        if not response.isError():
-          logger.info(f'f={response.registers[0]}')
-          write_registers(bus=bus, start_address=1140, data=0,node_id =2)
+          logger.info(f'force={response.registers[0]}')
+          write_registers(bus=bus, start_address=1225, data=2,node_id =2)
